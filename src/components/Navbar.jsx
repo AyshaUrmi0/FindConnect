@@ -31,7 +31,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="px-20 text-white  bg-gradient-to-r from-orange-400 via-red-500 to-red-600 navbar">
+    <div className="px-20 text-white bg-gradient-to-r from-orange-400 via-red-500 to-red-600 navbar">
       {/* Logo */}
       <div className="navbar-start">
         <Link to="/" className="text-2xl font-bold">
@@ -52,18 +52,46 @@ const Navbar = () => {
               Lost & Found Items
             </Link>
           </li>
+          {!user && (
+            <li>
+              <Link to="/how-it-works" className="hover:text-gray-200">
+                How It Works
+              </Link>
+            </li>
+          )}
+          {user && (
+            <>
+              <li>
+                <Link to="/addItems" className="hover:text-gray-200">
+                  Add Lost Item
+                </Link>
+              </li>
+              <li>
+                <Link to="/myItems" className="hover:text-gray-200">
+                  Manage My Items
+                </Link>
+              </li>
+              <li>
+                <Link to="/recoveredItems" className="hover:text-gray-200">
+                  All Recovered Items
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-4 navbar-end">
         {!user ? (
-          <Link
-            to="/login"
-            className="text-blue-600 bg-white btn btn-sm hover:bg-gray-200"
-          >
-            Login
-          </Link>
+          <>
+            <Link
+              to="/login"
+              className="text-blue-600 bg-white btn btn-sm hover:bg-gray-200"
+            >
+              Login
+            </Link>
+          </>
         ) : (
           <>
             {/* Profile Picture Dropdown (Large Devices) */}
@@ -170,6 +198,13 @@ const Navbar = () => {
                   Lost & Found Items
                 </Link>
               </li>
+              {!user && (
+                <li>
+                  <Link to="/how-it-works" onClick={() => setNavMenuOpen(false)}>
+                    How It Works
+                  </Link>
+                </li>
+              )}
               {user && (
                 <>
                   <li>
