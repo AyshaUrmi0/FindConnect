@@ -1,0 +1,95 @@
+/* .App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  .block {
+    position: relative;
+    margin: 10% auto;
+    border-radius: 10px;
+    width: 90%;
+    height: 200px;
+    background-color: lightgray;
+  }
+  
+  .glow::before,
+  .glow::after {
+    content: "";
+    position: absolute;
+    border-radius: 10px;
+    left: -2px;
+    top: -2px;
+    background: linear-gradient(
+      45deg,
+      orange,
+      purple,
+      orange,
+      purple,
+      orange,
+      purple
+    );
+    background-size: 400%;
+    width: calc(100% + 5px);
+    height: calc(100% + 5px);
+    z-index: -1;
+    animation: animateGlow 20s linear infinite;
+  }
+  
+  @keyframes animateGlow {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  .glow::after {
+    filter: blur(40px);
+    opacity: 0.99;
+  }
+  
+  .glowBorder {
+    margin: 16px;
+    border: solid 4px transparent;
+    border-radius: 8px;
+    background-image: linear-gradient(white, white),
+      linear-gradient(
+        45deg,
+        orange,
+        purple,
+        orange,
+        purple,
+        orange,
+        purple,
+        orange,
+        purple
+      );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    content: "";
+    position: absolute;
+    background-size: 400%;
+    animation: animateGlowBorder 80s linear infinite;
+  }
+  
+  @keyframes animateGlowBorder {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  .glowBorder::after {
+    filter: blur(40px);
+    opacity: 0.99;
+  }
+   */

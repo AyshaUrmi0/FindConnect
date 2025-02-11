@@ -31,7 +31,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="p-5 text-white bg-gradient-to-r from-orange-400 via-red-500 to-red-600 navbar">
+    <div className="px-20 text-white  bg-gradient-to-r from-orange-400 via-red-500 to-red-600 navbar">
       {/* Logo */}
       <div className="navbar-start">
         <Link to="/" className="text-2xl font-bold">

@@ -1,53 +1,116 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Search, MapPin, Calendar, ArrowRight, Loader2 } from 'lucide-react';
 
 const LatestItems = () => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [items, setItems] = useState([]);
+  useEffect(() => {
+    fetch("https://find-connect-server.vercel.app/Items")
+      .then((res) => res.json())
+      .then((data) => {
+        setItems(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
-    useEffect(() => {
-        fetch("https://find-connect-server.vercel.app/Items")
-          .then((res) => res.json())
-          
-          .then((data) => setItems(data))
-          .catch((err) => console.error(err));
-      }, []);
-    
+  if (loading) {
     return (
-        <div className="container p-4 mx-auto my-8">
-        <h2 className="mb-6 text-3xl font-bold text-center text-gray-600">
-         Recent Find & Lost Items
-        </h2>
-        <p className='text-center text-gray-600'>Have a recent find or lost item? Share it with the community!</p>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <div key={item._id} className="p-4 bg-white rounded shadow">
-              <img src={item.image} alt={item.title} className="object-cover w-full h-48 rounded" />
-              <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
-              <p className="text-sm">{item.description}</p>
-              <p className="text-sm text-gray-500">Location: {item.location}</p>
-              <p className="text-sm text-gray-500">Date: {item.date}</p>
-              <Link
-                to={`/items/${item._id}`}
-                className="block px-4 py-2 text-white rounded mt-2font-bold bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600"
-              >
-                View Details
-              </Link>
-            </div>
-          ))}
-        </div>
-        <div className="mt-6 text-center">
-        <Link
-  to="/allItems"
-  className="px-4 py-2 font-bold text-white rounded bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600"
->
-  See All
-</Link>
-        </div>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="w-8 h-8 text-yellow-500 animate-spin" />
       </div>
     );
-  };
-  
-  export default LatestItems;
-  
+  }
 
+  return (
+    <div className="container px-4 mx-auto my-12">
+      {/* Hero Section */}
+      <div className="relative mb-12 text-center">
+        <h2 className="mb-4 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl">
+          Recent Find & Lost Items
+        </h2>
+        <p className="max-w-2xl mx-auto text-gray-600 md:text-lg">
+          Have a recent find or lost item? Share it with the community and help others reconnect with their belongings.
+        </p>
+        <div className="absolute top-0 w-24 h-1 -translate-x-1/2 left-1/2 bg-gradient-to-r from-yellow-400 to-red-500" />
+      </div>
+
+      {/* Search Bar */}
+      <div className="relative max-w-2xl px-4 py-2 mx-auto mb-12 bg-white rounded-full shadow-lg">
+        <div className="flex items-center">
+          <Search className="w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search for items..."
+            className="w-full px-4 py-2 text-gray-700 bg-transparent outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Items Grid */}
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => (
+          <div
+            key={item._id}
+            className="overflow-hidden transition-transform duration-300 bg-white shadow-lg group rounded-xl hover:-translate-y-2"
+          >
+            <div className="relative overflow-hidden aspect-video">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/60 to-transparent group-hover:opacity-100" />
+            </div>
+            
+            <div className="p-6">
+              <h3 className="mb-3 text-xl font-bold text-gray-800 line-clamp-1">
+                {item.title}
+              </h3>
+              <p className="mb-4 text-sm text-gray-600 line-clamp-2">
+                {item.description}
+              </p>
+              
+              <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-4 h-4" />
+                  <span>{item.location}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Calendar className="w-4 h-4" />
+                  <span>{new Date(item.date).toLocaleDateString()}</span>
+                </div>
+              </div>
+
+              <Link
+                to={`/items/${item._id}`}
+                className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold text-white transition-colors rounded-lg bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 group"
+              >
+                View Details
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* See All Button */}
+      <div className="mt-12 text-center">
+        <Link
+          to="/allItems"
+          className="inline-flex items-center gap-2 px-8 py-4 font-bold text-white transition-colors rounded-full bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 group"
+        >
+          See All Items
+          <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default LatestItems;
