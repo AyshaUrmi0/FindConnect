@@ -17,6 +17,7 @@ import PrivateRoute from "../router/PrivateRoute";
 import LatestItems from "../pages/Home/LatestItems";
 import PopularCategories from "../pages/Home/PopularCategories";
 import Testimonials from "../pages/Home/Testimonials";
+import HowItWorks from "../pages/Items/HowItWorks";
   const router = createBrowserRouter([
     {
       path: "/",
@@ -53,6 +54,10 @@ import Testimonials from "../pages/Home/Testimonials";
         {
           path: "/allItems", 
           element: <AllItems />, 
+        },
+        { path: "/how-it-works",
+          element: <HowItWorks></HowItWorks>
+
         },
         {
           path: "/items/:id",

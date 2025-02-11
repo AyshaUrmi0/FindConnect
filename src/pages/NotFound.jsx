@@ -1,4 +1,3 @@
-// import "animate.css";
 import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
@@ -9,29 +8,31 @@ const NotFound = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center bg-gray-100">
-     
-      <div className="animate__animated animate__bounce">
+    <div className="flex flex-col items-center justify-center h-screen px-6 text-center bg-gradient-to-br from-orange-100 via-red-200 to-orange-300">
+      {/* Lost Item Illustration */}
+      <div className="animate-bounce">
         <img
-          src="https://i.ibb.co.com/7jxYptg/6325254.jpg"
-          alt="404 Not Found"
-          className="w-full max-w-md mx-auto"
+          src="https://i.ibb.co.com/F4trxBb8/png-clipart-emoji-sadness-emoticon-smiley-sad-emoji-crying-imoji-face-sticker-thumbnail-removebg-pre.png" 
+          alt="Lost Item Illustration"
+          className="w-80 md:w-96"
         />
       </div>
-   
-      <div className="animate__animated animate__fadeInDown animate__delay-1s">
-        <h1 className="mt-4 text-4xl font-bold text-red-600">Oops! Page Not Found</h1>
-        <p className="mt-2 text-gray-500">Sorry, the page you’re looking for doesn’t exist.</p>
-      </div>
-   
-      <div className="animate__animated animate__fadeInUp animate__delay-2s">
-        <button
-          onClick={handleGoHome}
-          className="px-4 py-2 mt-6 text-white transition-all duration-300 bg-red-400 rounded hover:bg-red-100"
-        >
-          Go Back to Home
-        </button>
-      </div>
+
+      {/* Not Found Message */}
+      <h1 className="mt-6 text-4xl font-extrabold text-red-600 md:text-5xl">
+        Oops! Page Not Found
+      </h1>
+      <p className="mt-2 text-lg text-gray-700 md:text-xl">
+        It looks like this page is lost... just like some of the items on our site.
+      </p>
+
+      {/* Go Back Button */}
+      <button
+        onClick={handleGoHome}
+        className="px-6 py-3 mt-6 text-lg font-semibold text-white transition-all duration-300 bg-red-500 rounded-full shadow-lg hover:bg-red-600 hover:shadow-2xl"
+      >
+        Go Back to Home
+      </button>
     </div>
   );
 };
