@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-full text-white lg:px-20 sm:px-10 bg-gradient-to-r from-orange-400 via-red-500 to-red-600 navbar">
+    <div className="fixed top-0 left-0 z-50 w-full text-white bg-transparent lg:px-20 sm:px-10 navbar">
       {/* Logo */}
       <div className="navbar-start">
         <Link to="/" className="text-2xl font-bold">
