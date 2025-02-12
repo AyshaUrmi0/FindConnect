@@ -13,3 +13,29 @@
   .slick-slide > div {
     @apply mx-auto;
   }
+  /* Fancy gradient text effect for logo */
+.logo-text {
+    @apply relative font-black tracking-tight;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-text span {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.2));
+  }
+  
+  /* Add a subtle glow effect on hover */
+  .logo-text:hover span {
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.2));
+    }
+    to {
+      filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.4));
+    }
+  }

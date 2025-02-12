@@ -4,6 +4,7 @@ import Authcontext from "../context/Authcontext/Authcontext";
 import { toast } from "react-toastify";
 import auth from "../firebase/firebase.init";
 import { ThemeContext } from "../context/Authcontext/ThemeContext";
+import { LogOut, Moon, Sun, Search, Menu } from "lucide-react";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(Authcontext);
@@ -25,46 +26,100 @@ const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-full text-white bg-transparent lg:px-20 sm:px-10 navbar">
+    <div className="fixed top-0 left-0 z-50 w-full border-b backdrop-blur-md bg-base-100/80 border-base-200 dark:border-base-700 lg:px-20 sm:px-10 navbar">
       {/* Logo */}
       <div className="navbar-start">
-        <Link to="/" className="text-2xl font-bold">
-          FindConnect
+        <Link to="/" className="text-3xl font-black logo-text font-display">
+          Find<span className="text-primary">Connect</span>
         </Link>
       </div>
 
       {/* Center Navigation Links (Large Devices) */}
       <div className="hidden navbar-center lg:flex">
-        <ul className="menu menu-horizontal">
+        <ul className="gap-2 menu menu-horizontal">
           <li>
-            <NavLink to="/" className={({ isActive }) => (isActive ? "border-b-2 border-white" : "hover:text-gray-200")}>
+            <NavLink 
+              to="/" 
+              className={({ isActive }) => 
+                `px-4 py-2 rounded-lg transition-all ${
+                  isActive 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "hover:bg-base-200 text-base-content"
+                }`
+              }
+            >
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/allItems" className={({ isActive }) => (isActive ? "border-b-2 border-white" : "hover:text-gray-200")}>
+            <NavLink 
+              to="/allItems" 
+              className={({ isActive }) => 
+                `px-4 py-2 rounded-lg transition-all ${
+                  isActive 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "hover:bg-base-200 text-base-content"
+                }`
+              }
+            >
               Lost & Found Items
             </NavLink>
           </li>
           <li>
-            <NavLink to="/how-it-works" className={({ isActive }) => (isActive ? "border-b-2 border-white" : "hover:text-gray-200")}>
+            <NavLink 
+              to="/how-it-works" 
+              className={({ isActive }) => 
+                `px-4 py-2 rounded-lg transition-all ${
+                  isActive 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "hover:bg-base-200 text-base-content"
+                }`
+              }
+            >
               How It Works
             </NavLink>
           </li>
           {user && (
             <>
               <li>
-                <NavLink to="/addItems" className={({ isActive }) => (isActive ? "border-b-2 border-white" : "hover:text-gray-200")}>
+                <NavLink 
+                  to="/addItems" 
+                  className={({ isActive }) => 
+                    `px-4 py-2 rounded-lg transition-all ${
+                      isActive 
+                        ? "bg-primary/10 text-primary font-medium" 
+                        : "hover:bg-base-200 text-base-content"
+                    }`
+                  }
+                >
                   Add Lost Item
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/myItems" className={({ isActive }) => (isActive ? "border-b-2 border-white" : "hover:text-gray-200")}>
+                <NavLink 
+                  to="/myItems" 
+                  className={({ isActive }) => 
+                    `px-4 py-2 rounded-lg transition-all ${
+                      isActive 
+                        ? "bg-primary/10 text-primary font-medium" 
+                        : "hover:bg-base-200 text-base-content"
+                    }`
+                  }
+                >
                   Manage My Items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/recoveredItems" className={({ isActive }) => (isActive ? "border-b-2 border-white" : "hover:text-gray-200")}>
+                <NavLink 
+                  to="/recoveredItems" 
+                  className={({ isActive }) => 
+                    `px-4 py-2 rounded-lg transition-all ${
+                      isActive 
+                        ? "bg-primary/10 text-primary font-medium" 
+                        : "hover:bg-base-200 text-base-content"
+                    }`
+                  }
+                >
                   All Recovered Items
                 </NavLink>
               </li>
@@ -74,20 +129,34 @@ const Navbar = () => {
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-4 navbar-end">
-        <button className="p-2 text-white bg-gray-800 rounded-md" onClick={toggleTheme}>
-          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+      <div className="flex items-center gap-2 navbar-end">
+        <button 
+          className="btn btn-ghost btn-circle"
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+        >
+          {theme === "light" ? (
+            <Moon className="w-5 h-5" />
+          ) : (
+            <Sun className="w-5 h-5" />
+          )}
         </button>
+        
         {!user ? (
-          <Link to="/login" className="text-blue-600 bg-white btn btn-sm hover:bg-gray-200">
+          <Link 
+            to="/login" 
+            className="normal-case btn btn-primary btn-sm"
+          >
             Login
           </Link>
         ) : (
-          <>
-            <button onClick={handleSignOut} className="hidden px-4 py-2 text-sm text-red-600 bg-white rounded lg:block hover:bg-gray-200">
-              Logout
-            </button>
-          </>
+          <button 
+            onClick={handleSignOut} 
+            className="gap-2 normal-case btn btn-error btn-sm"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
         )}
       </div>
 
@@ -96,54 +165,74 @@ const Navbar = () => {
         <div className="drawer">
           <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
-            <button onClick={() => (document.getElementById("nav-drawer").checked = true)} className="btn btn-ghost">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 5.25h16.5m-16.5 6h16.5m-16.5 6h16.5" />
-              </svg>
-            </button>
+            <label 
+              htmlFor="nav-drawer" 
+              className="btn btn-ghost btn-circle drawer-button"
+            >
+              <Menu className="w-5 h-5" />
+            </label>
           </div>
           <div className="drawer-side">
             <label htmlFor="nav-drawer" className="drawer-overlay"></label>
-            <ul className="w-64 p-4 text-black bg-white menu">
-              <li>
-                <button className="p-2 text-black bg-gray-200 rounded-md" onClick={toggleTheme}>
-                  {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+            <ul className="min-h-full p-4 menu w-80 bg-base-200 text-base-content">
+              <li className="mb-2">
+                <button 
+                  className="justify-start gap-2 btn btn-ghost"
+                  onClick={toggleTheme}
+                >
+                  {theme === "light" ? (
+                    <>
+                      <Moon className="w-5 h-5" />
+                      Dark Mode
+                    </>
+                  ) : (
+                    <>
+                      <Sun className="w-5 h-5" />
+                      Light Mode
+                    </>
+                  )}
                 </button>
               </li>
+              <div className="divider"></div>
               <li>
-                <NavLink to="/" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                <NavLink to="/" className="active:bg-primary/20">
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/allItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                <NavLink to="/allItems" className="active:bg-primary/20">
                   Lost & Found Items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/how-it-works" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                <NavLink to="/how-it-works" className="active:bg-primary/20">
                   How It Works
                 </NavLink>
               </li>
               {user && (
                 <>
+                  <div className="divider">User Menu</div>
                   <li>
-                    <NavLink to="/addItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                    <NavLink to="/addItems" className="active:bg-primary/20">
                       Add Lost Item
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/myItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                    <NavLink to="/myItems" className="active:bg-primary/20">
                       Manage My Items
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/recoveredItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                    <NavLink to="/recoveredItems" className="active:bg-primary/20">
                       All Recovered Items
                     </NavLink>
                   </li>
                   <li>
-                    <button onClick={handleSignOut}>
+                    <button 
+                      onClick={handleSignOut}
+                      className="gap-2 text-error"
+                    >
+                      <LogOut className="w-4 h-4" />
                       Logout
                     </button>
                   </li>
@@ -151,7 +240,10 @@ const Navbar = () => {
               )}
               {!user && (
                 <li>
-                  <Link to="/login" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                  <Link 
+                    to="/login" 
+                    className="mt-4 btn btn-primary"
+                  >
                     Login
                   </Link>
                 </li>

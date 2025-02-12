@@ -18,6 +18,7 @@ import LatestItems from "../pages/Home/LatestItems";
 import PopularCategories from "../pages/Home/PopularCategories";
 import Testimonials from "../pages/Home/Testimonials";
 import HowItWorks from "../pages/Items/HowItWorks";
+import ImageProcessSection from "../pages/Home/ImageProcessSection ";
   const router = createBrowserRouter([
     {
       path: "/",
@@ -29,6 +30,7 @@ import HowItWorks from "../pages/Items/HowItWorks";
           element: <>
           <Banner />
           <LatestItems />
+          <ImageProcessSection/>
           <PopularCategories />
           <Testimonials />
           </> 
