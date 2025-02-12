@@ -7,14 +7,17 @@ import "./index.css";
 import { ToastContainer } from "react-toastify";
 import AuthProvider from "./context/Authcontext/AuthProvider";
 import "./App.css";
+import ThemeProvider from "./context/Authcontext/ThemeContext";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ToastContainer />
+   <ThemeProvider>
    <AuthProvider>
    <RouterProvider router={router} />
    </AuthProvider>
+   </ThemeProvider>
   </React.StrictMode>
 );
 

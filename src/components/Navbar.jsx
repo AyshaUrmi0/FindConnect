@@ -3,12 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import Authcontext from "../context/Authcontext/Authcontext";
 import { toast } from "react-toastify";
 import auth from "../firebase/firebase.init";
+import { ThemeContext } from "../context/Authcontext/ThemeContext";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(Authcontext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [navMenuOpen, setNavMenuOpen] = useState(false);
-
+  
   const handleSignOut = async () => {
     try {
       await signOutUser(auth);
@@ -21,6 +21,8 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <div className="fixed top-0 left-0 z-50 w-full text-white bg-transparent lg:px-20 sm:px-10 navbar">
@@ -73,30 +75,18 @@ const Navbar = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-4 navbar-end">
+        <button className="p-2 text-white bg-gray-800 rounded-md" onClick={toggleTheme}>
+          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+        </button>
         {!user ? (
           <Link to="/login" className="text-blue-600 bg-white btn btn-sm hover:bg-gray-200">
             Login
           </Link>
         ) : (
           <>
-            {/* Profile Picture Dropdown (Large Devices) */}
-            <div className="relative hidden dropdown dropdown-end lg:block">
-              <button tabIndex={0} onClick={toggleDropdown} className="btn btn-ghost btn-circle avatar" title={user.displayName || "User"}>
-                <div className="w-10 rounded-full">
-                  <img src={user.photoURL || "/default-avatar.png"} alt="User" />
-                </div>
-              </button>
-            </div>
-            {/* Logout Button for Large Devices */}
             <button onClick={handleSignOut} className="hidden px-4 py-2 text-sm text-red-600 bg-white rounded lg:block hover:bg-gray-200">
               Logout
             </button>
-            {/* Profile Picture Tooltip (Small Devices) */}
-            <div className="tooltip tooltip-bottom lg:hidden" data-tip={user.displayName || "User"}>
-              <div className="w-10 rounded-full">
-                <img src={user.photoURL || "/default-avatar.png"} alt="User" />
-              </div>
-            </div>
           </>
         )}
       </div>
@@ -116,39 +106,44 @@ const Navbar = () => {
             <label htmlFor="nav-drawer" className="drawer-overlay"></label>
             <ul className="w-64 p-4 text-black bg-white menu">
               <li>
-                <NavLink to="/" className={({ isActive }) => (isActive ? "border-b-2 border-black" : "hover:text-gray-600")} onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                <button className="p-2 text-black bg-gray-200 rounded-md" onClick={toggleTheme}>
+                  {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+                </button>
+              </li>
+              <li>
+                <NavLink to="/" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/allItems" className={({ isActive }) => (isActive ? "border-b-2 border-black" : "hover:text-gray-600")} onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                <NavLink to="/allItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
                   Lost & Found Items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/how-it-works" className={({ isActive }) => (isActive ? "border-b-2 border-black" : "hover:text-gray-600")} onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                <NavLink to="/how-it-works" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
                   How It Works
                 </NavLink>
               </li>
               {user && (
                 <>
                   <li>
-                    <NavLink to="/addItems" className={({ isActive }) => (isActive ? "border-b-2 border-black" : "hover:text-gray-600")} onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                    <NavLink to="/addItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
                       Add Lost Item
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/myItems" className={({ isActive }) => (isActive ? "border-b-2 border-black" : "hover:text-gray-600")} onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                    <NavLink to="/myItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
                       Manage My Items
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/recoveredItems" className={({ isActive }) => (isActive ? "border-b-2 border-black" : "hover:text-gray-600")} onClick={() => (document.getElementById("nav-drawer").checked = false)}>
+                    <NavLink to="/recoveredItems" onClick={() => (document.getElementById("nav-drawer").checked = false)}>
                       All Recovered Items
                     </NavLink>
                   </li>
                   <li>
-                    <button onClick={handleSignOut} className="hover:bg-gray-100">
+                    <button onClick={handleSignOut}>
                       Logout
                     </button>
                   </li>
