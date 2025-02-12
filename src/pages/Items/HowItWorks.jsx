@@ -1,6 +1,6 @@
 const HowItWorks = () => {
     return (
-      <div className="p-6 mt-6 page-width isolate collapse-corners">
+      <div className="p-6 mt-20 page-width isolate collapse-corners">
         <div className="grid items-center grid-cols-1 gap-8 md:grid-cols-2">
           {/* Image Section */}
           <div className="relative w-full">

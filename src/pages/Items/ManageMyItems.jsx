@@ -29,7 +29,7 @@ const ManageMyItems = () => {
     }, [user.email]);
     return (
 
-        <div className="max-w-6xl p-4 mx-auto bg-white rounded-md shadow-md">
+        <div className="max-w-6xl p-4 mx-auto mt-20 bg-white rounded-md shadow-md">
         <h1 className="mb-4 text-2xl font-semibold text-center">Manage My Items</h1>
         <p className="mb-6 text-center text-gray-600">
             {items.length > 0 ? `${items.length} items` : 'You have not added any items yet.'}

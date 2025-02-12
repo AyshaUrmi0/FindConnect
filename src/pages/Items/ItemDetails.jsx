@@ -165,7 +165,7 @@ const ItemDetails = () => {
   };
   
   return (
-    <div className="max-w-sm mx-auto overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto mt-20 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md">
       <img src={image} alt={title} className="object-cover w-full h-48" />
       <div className="p-4">
         <h1 className="text-xl font-semibold text-gray-800">{title}</h1>

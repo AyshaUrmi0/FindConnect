@@ -33,7 +33,7 @@ const AllItems = () => {
   };
 
   return (
-    <div className="container p-4 mx-auto my-8">
+    <div className="container p-4 mx-auto my-8 mt-20">
       <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">
         All Find & Lost Items are here...
       </h2>

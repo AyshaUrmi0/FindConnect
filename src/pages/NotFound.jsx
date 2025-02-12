@@ -8,7 +8,7 @@ const NotFound = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-6 text-center bg-gradient-to-br from-orange-100 via-red-200 to-orange-300">
+    <div className="flex flex-col items-center justify-center h-screen px-6 mt-6 text-center bg-gradient-to-br from-orange-100 via-red-200 to-orange-300">
       {/* Lost Item Illustration */}
       <div className="animate-bounce">
         <img

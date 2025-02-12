@@ -80,7 +80,7 @@ const UpdateItem = () => {
   }
 
   return (
-    <div className="max-w-2xl p-4 mx-auto bg-white rounded-md shadow-md">
+    <div className="max-w-2xl p-4 mx-auto mt-20 bg-white rounded-md shadow-md">
       <h1 className="mb-4 text-2xl font-semibold text-center">Update Item</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Post Type */}
