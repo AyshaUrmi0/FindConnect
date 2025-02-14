@@ -26,7 +26,7 @@ const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-full mb-5 border-b backdrop-blur-md bg-base-100/80 border-base-200 dark:border-base-700 lg:px-20 sm:px-10 navbar">
+    <div className="fixed top-0 left-0 z-50 w-full mb-5 border-b backdrop-blur-md bg-base-100/80 border-base-200 dark:border-base-700 lg:px-15 sm:px-10 navbar">
       {/* Logo */}
       <div className="navbar-start">
         <Link to="/" className="text-3xl font-black logo-text font-display">

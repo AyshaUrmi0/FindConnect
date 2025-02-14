@@ -17,12 +17,14 @@ const categories = [
 
 const PopularCategories = () => {
   return (
-    <div className="container px-4 mx-auto my-16 ">
-      <h2 className="mb-8 text-4xl font-bold text-center text-black">Popular Categories</h2>
-      <p className="text-center text-gray-400">
+    <div className="container px-4 mx-auto my-16">
+      <h2 className="mb-8 text-4xl font-bold text-center dark:text-white">
+        Popular Categories
+      </h2>
+      <p className="text-center dark:text-white">
         Here are some of the most popular categories for lost and found items.
       </p>
-
+  
       {/* Swiper Slider */}
       <Swiper
         slidesPerView={1}
@@ -40,41 +42,54 @@ const PopularCategories = () => {
           <SwiperSlide key={index}>
             <motion.div
               className="p-6 text-center min-h-[300px] rounded-xl shadow-lg border-[3px] border-transparent 
-              bg-clip-border hover:border-orange-500 transition-all duration-300"
+              bg-clip-border hover:border-purple-500 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
               <motion.div
-                className="mb-4 text-5xl text-white"
+                className="mb-4 text-5xl dark:text-white"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
               >
                 {category.icon}
               </motion.div>
-              <h3 className="mt-4 text-xl font-bold text-black">{category.name}</h3>
-              <p className="text-sm text-gray-400">{category.description}</p>
+              <h3 className="mt-4 text-xl font-bold dark:text-white">
+                {category.name}
+              </h3>
+              <p className="text-sm dark:text-gray-300">
+                {category.description}
+              </p>
             </motion.div>
           </SwiperSlide>
         ))}
       </Swiper>
-
+  
       {/* Custom Swiper Styles */}
       <style>
         {`
           .custom-swiper .swiper-pagination-bullet {
             width: 12px;
             height: 12px;
-            background: rgba(0, 0, 0, 90);
+            background: rgba(128, 90, 213, 0.7);
           }
           .custom-swiper .swiper-pagination-bullet-active {
-            background: linear-gradient(to right, #fb923c, #ef4444, #dc2626);
+            background: linear-gradient(to right, #8b5cf6, #a78bfa, #c4b5fd);
+          }
+          @media (prefers-color-scheme: dark) {
+            .custom-swiper .swiper-pagination-bullet {
+              background: rgba(233, 213, 255, 0.7);
+            }
+            .custom-swiper .swiper-pagination-bullet-active {
+              background: linear-gradient(to right, #d8b4fe, #a78bfa, #8b5cf6);
+            }
           }
         `}
       </style>
     </div>
   );
+  
 };
 
 export default PopularCategories;

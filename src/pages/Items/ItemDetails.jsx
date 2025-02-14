@@ -1,3 +1,6 @@
+
+
+
 import React, { useContext, useEffect, useState } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
@@ -165,38 +168,38 @@ const ItemDetails = () => {
   };
   
   return (
-    <div className="max-w-sm mx-auto mt-20 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto mt-20 overflow-hidden border border-gray-200 rounded-lg shadow-md dark:bg-gray-800">
       <img src={image} alt={title} className="object-cover w-full h-48" />
       <div className="p-4">
-        <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
-        <p className="mt-1 text-sm text-gray-600">{description}</p>
+        <h1 className="text-xl font-semibold dark:text-white">{title}</h1>
+        <p className="mt-1 text-sm dark:text-white">{description}</p>
         <div className="mt-2">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm dark:text-white">
             <span className="font-semibold">Type:</span> {type}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm dark:text-white">
             <span className="font-semibold">Category:</span> {category}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm dark:text-white">
             <span className="font-semibold">Location:</span> {location}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm dark:text-white">
             <span className="font-semibold">Date:</span> {date}
           </p>
         </div>
         <div className="pt-2 mt-4 border-t">
-          <h2 className="text-sm font-semibold text-gray-700">Contact Info:</h2>
-          <p className="text-sm text-gray-500">
+          <h2 className="text-sm font-semibold dark:text-white">Contact Info:</h2>
+          <p className="text-sm dark:text-white">
             <span className="font-semibold">Name:</span> {contactInfo.name}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm dark:text-white">
             <span className="font-semibold">Email:</span> {contactInfo.email}
           </p>
         </div>
         
           <button
             onClick={() => setModalOpen(true)}
-            className="w-full px-4 py-2 mt-4 text-white rounded-lg bg-gradient-to-r from-orange-400 via-red-500 to-red-600 "
+            className="w-full px-4 py-2 mt-4 border-2 border-purple-600 rounded-lg dark:text-white dark:bg-gray-800 "
           >
             {type === 'Lost' ? 'Found This!' : 'This is Mine!'}
           </button>

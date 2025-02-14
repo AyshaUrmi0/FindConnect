@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Calendar, ArrowRight, Loader2 } from 'lucide-react';
+import {ShoppingBag, Search, MapPin, Calendar, ArrowRight, Loader2 } from 'lucide-react';
 
 const LatestItems = () => {
   const [items, setItems] = useState([]);
@@ -37,12 +37,12 @@ const LatestItems = () => {
         <p className="max-w-2xl mx-auto dark:text-white light:text-black md:text-lg">
           Have a recent find or lost item? Share it with the community and help others reconnect with their belongings.
         </p>
-        <div className="absolute top-0 w-24 h-1 -translate-x-1/2 left-1/2 bg-gradient-to-r from-yellow-400 to-red-500" />
+        <div className="absolute top-0 w-24 h-1 -translate-x-1/2 left-1/2 " />
       </div>
 
       {/* Search Bar */}
-      <div className="relative max-w-2xl px-4 py-2 mx-auto mb-12 bg-white rounded-full shadow-lg">
-        <div className="flex items-center">
+      <div className="relative max-w-2xl px-4 py-2 mx-auto mb-12 border border-gray-500 rounded-full shadow-lg dark:bg-gray-800 ">
+        <div className="flex items-center ">
           <Search className="w-5 h-5 " />
           <input
             type="text"
@@ -88,12 +88,13 @@ const LatestItems = () => {
               </div>
 
               <Link
-                to={`/items/${item._id}`}
-                className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold text-white transition-colors rounded-lg bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 group"
-              >
-                View Details
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+  to={`/items/${item._id}`}
+  className="flex items-center justify-center w-full gap-2 px-6 py-3 font-semibold text-purple-600 transition-colors border-2 border-purple-600 rounded-lg hover:bg-purple-600 hover:text-white group"
+>
+  View Details
+  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+</Link>
+
             </div>
           </div>
         ))}
@@ -101,13 +102,14 @@ const LatestItems = () => {
 
       {/* See All Button */}
       <div className="mt-12 text-center ">
-        <Link
-          to="/allItems"
-          className="inline-flex items-center gap-2 px-8 py-4 font-bold transition-colors rounded-full bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600 group dark:text-white"
-        >
-          See All Items
-          <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-        </Link>
+      <Link
+  to="/allItems"
+  className="inline-flex items-center gap-2 px-8 py-4 font-bold text-purple-600 transition-colors border-2 border-purple-600 rounded-full hover:bg-purple-600 hover:text-white group"
+>
+  <ShoppingBag className="w-5 h-5" />
+  See All Items
+  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+</Link>
       </div>
     </div>
   );

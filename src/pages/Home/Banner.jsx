@@ -28,19 +28,20 @@ const Banner = () => {
 
           {/* Action Buttons */}
           <div className="grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 sm:gap-4">
-            <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-sm sm:text-base text-white rounded-lg hover:bg-blue-700 transition-colors">
-              <PlusCircle className="w-4 h-4 sm:h-5 sm:w-5" />
-              <span>Report Lost</span>
-            </button>
-            <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-600 text-sm sm:text-base text-white rounded-lg hover:bg-green-700 transition-colors">
-              <MapPin className="w-4 h-4 sm:h-5 sm:w-5" />
-              <span>Found Items</span>
-            </button>
-            <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-purple-600 text-sm sm:text-base text-white rounded-lg hover:bg-purple-700 transition-colors sm:col-span-2 md:col-span-1">
-              <Bell className="w-4 h-4 sm:h-5 sm:w-5" />
-              <span>Alerts</span>
-            </button>
-          </div>
+  <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base  border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 text-white">
+    <PlusCircle className="w-4 h-4 sm:h-5 sm:w-5" />
+    <span>Report Lost</span>
+  </button>
+  <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-white border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 ">
+    <MapPin className="w-4 h-4 sm:h-5 sm:w-5" />
+    <span>Found Items</span>
+  </button>
+  <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base  border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 text-white sm:col-span-2 md:col-span-1">
+    <Bell className="w-4 h-4 sm:h-5 sm:w-5" />
+    <span>Alerts</span>
+  </button>
+</div>
+
         </div>
       </div>
     </div>

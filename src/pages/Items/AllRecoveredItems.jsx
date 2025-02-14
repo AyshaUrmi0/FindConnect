@@ -42,7 +42,7 @@ const AllRecoveredItems = () => {
         <p className="text-lg font-medium">Toggle Layout:</p>
         <button
           onClick={() => setIsTableLayout(!isTableLayout)}
-          className="flex items-center gap-2 p-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+          className="flex items-center gap-2 p-2 text-white bg-purple-700 rounded-lg "
         >
           {isTableLayout ? (
             <>
@@ -57,7 +57,7 @@ const AllRecoveredItems = () => {
       </div>
       {isTableLayout ? (
         // Table Layout
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto dark:bg-gray-800">
           <table className="w-full text-sm border border-collapse border-gray-300 md:text-base">
             <thead>
               <tr>
@@ -77,7 +77,7 @@ const AllRecoveredItems = () => {
             </thead>
             <tbody>
               {recoveredItems.map((item) => (
-                <tr key={item._id}>
+                <tr className="dark:bg-gray-800" key={item._id}>
                   <td className="px-2 py-1 border border-gray-300 md:px-4 md:py-2">
                     {item.itemDetails.title}
                   </td>
@@ -101,20 +101,20 @@ const AllRecoveredItems = () => {
           {recoveredItems.map((item) => (
             <div
               key={item._id}
-              className="p-4 bg-white border border-gray-300 rounded-lg shadow-md"
+              className="p-4 border border-gray-300 rounded-lg shadow-md"
             >
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold">
                 {item.itemDetails.title}
               </h2>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm ">
                 <span className="font-semibold">Recovered Location:</span>{" "}
                 {item.recoveredLocation}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm ">
                 <span className="font-semibold">Recovered Date:</span>{" "}
                 {new Date(item.recoveredDate).toLocaleDateString()}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm ">
                 <span className="font-semibold">Recovered By:</span>{" "}
                 {item.recoveredBy.name}
               </p>

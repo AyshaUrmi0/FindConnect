@@ -27,11 +27,11 @@ const ImageProcessSection = () => {
         </h2>
 
         {/* Wave image */}
-        <img
+        {/* <img
           src="https://cdn.prod.website-files.com/5fe22b52285ac81c0bafbab6/5fe3adf3112dc4f2737773b6_dotted-up.svg"
           alt="Wave pattern"
           className="w-full mb-12"
-        />
+        /> */}
 
         {/* Process steps */}
         <motion.div
@@ -46,12 +46,12 @@ const ImageProcessSection = () => {
             className="p-8 transition-shadow duration-300 rounded-lg shadow-lg dark:bg-gray-700 hover:shadow-xl"
             variants={itemVariants}
           >
-            <div className="mb-4 text-6xl font-bold text-blue-500 dark:text-blue-300">01</div>
-            <FaCamera className="w-12 h-12 mx-auto mb-4 text-blue-500 dark:text-blue-300" />
-            <h2 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-200">
-              Snap &amp; Log
+            <div className="mb-4 text-6xl font-bold text-purple-500 dark:text-purple-300">01</div>
+            <FaCamera className="w-12 h-12 mx-auto mb-4 text-purple-500 dark:text-purple-300" />
+            <h2 className="mb-4 text-2xl font-semibold dark:text-white">
+              Snap & Log
             </h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 dark:text-white">
               Take a photo of the found item and log it using our app.
             </p>
           </motion.div>
@@ -66,7 +66,7 @@ const ImageProcessSection = () => {
             <h2 className="mb-4 text-2xl font-semibold dark:text-white">
               Add Info
             </h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600 dark:text-white">
               Add notable item information in the system.
             </p>
           </motion.div>
@@ -76,10 +76,10 @@ const ImageProcessSection = () => {
             className="p-8 transition-shadow duration-300 rounded-lg shadow-lg dark:text-white hover:shadow-xl"
             variants={itemVariants}
           >
-            <div className="mb-4 text-6xl font-bold text-green-500 dark:text-white">03</div>
-            <FaChartLine className="w-12 h-12 mx-auto mb-4 text-green-500 dark:text-green-300" />
-            <h2 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-white">
-              Track &amp; Manage
+            <div className="mb-4 text-6xl font-bold text-purple-500 dark:text-purple-300">03</div>
+            <FaChartLine className="w-12 h-12 mx-auto mb-4 text-purple-500 dark:text-purple-300" />
+            <h2 className="mb-4 text-2xl font-semibold dark:text-white">
+              Track & Manage
             </h2>
             <p className="text-gray-600 dark:text-white">
               Deliver the best experience for your customers and staff from our
@@ -89,11 +89,11 @@ const ImageProcessSection = () => {
         </motion.div>
 
         {/* Wave image */}
-        <img
+        {/* <img
           src="https://cdn.prod.website-files.com/5fe22b52285ac81c0bafbab6/5fe3adf4d2b0c82bc1f9e711_dotted-down.svg"
           alt="Wave pattern"
           className="w-full mt-12"
-        />
+        /> */}
       </div>
     </div>
   );
