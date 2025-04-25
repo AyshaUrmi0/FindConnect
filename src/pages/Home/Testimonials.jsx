@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { ThemeContext } from '../../context/Authcontext/ThemeContext';
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ThemeContext } from '../../context/Authcontext/ThemeContext';
 
 const testimonials = [
   {
@@ -51,7 +52,7 @@ const testimonials = [
   },
 ];
 
-const PrevArrow = ({ onClick }) => (
+const PrevArrow = ({ onClick, theme }) => (
   <button
     onClick={onClick}
     className={`absolute left-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg cursor-pointer md:p-4 top-1/2 hover:bg-gray-50 group ${
@@ -63,7 +64,7 @@ const PrevArrow = ({ onClick }) => (
   </button>
 );
 
-const NextArrow = ({ onClick }) => (
+const NextArrow = ({ onClick, theme }) => (
   <button
     onClick={onClick}
     className={`absolute right-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg cursor-pointer md:p-4 top-1/2 hover:bg-gray-50 group ${
@@ -75,7 +76,7 @@ const NextArrow = ({ onClick }) => (
   </button>
 );
 
-const settings = {
+const settings = (theme) => ({
   dots: true,
   infinite: true,
   speed: 500,
@@ -83,10 +84,10 @@ const settings = {
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 5000,
-  nextArrow: <NextArrow />,
-  prevArrow: <PrevArrow />,
+  nextArrow: <NextArrow theme={theme} />,
+  prevArrow: <PrevArrow theme={theme} />,
   dotsClass: "slick-dots !bottom-[-3rem]",
-};
+});
 
 const Testimonials = () => {
   const { theme } = useContext(ThemeContext);
@@ -108,7 +109,7 @@ const Testimonials = () => {
       </motion.div>
     
       <div className="relative px-8 md:px-16">
-        <Slider {...settings}>
+        <Slider {...settings(theme)}>
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
