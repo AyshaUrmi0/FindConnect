@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../context/Authcontext/ThemeContext';
+import { Link } from 'react-router-dom';
 import { PlusCircle, MapPin, Bell } from 'lucide-react';
 
 const Banner = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div className="relative h-[400px] sm:h-[450px] md:h-[500px] w-full overflow-hidden">
       {/* Banner Image */}
@@ -28,20 +32,28 @@ const Banner = () => {
 
           {/* Action Buttons */}
           <div className="grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 sm:gap-4">
-  <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base  border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 text-white">
-    <PlusCircle className="w-4 h-4 sm:h-5 sm:w-5" />
-    <span>Report Lost</span>
-  </button>
-  <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-white border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 ">
-    <MapPin className="w-4 h-4 sm:h-5 sm:w-5" />
-    <span>Found Items</span>
-  </button>
-  <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base  border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 text-white sm:col-span-2 md:col-span-1">
-    <Bell className="w-4 h-4 sm:h-5 sm:w-5" />
-    <span>Alerts</span>
-  </button>
-</div>
-
+            <Link
+              to="/report-lost"
+              className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 text-white"
+            >
+              <PlusCircle className="w-4 h-4 sm:h-5 sm:w-5" />
+              <span>Report Lost</span>
+            </Link>
+            <Link
+              to="/report-found"
+              className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-white border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600"
+            >
+              <MapPin className="w-4 h-4 sm:h-5 sm:w-5" />
+              <span>Found Items</span>
+            </Link>
+            <Link
+              to="/alerts"
+              className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-purple-600 rounded-lg transition-colors hover:bg-purple-600 text-white sm:col-span-2 md:col-span-1"
+            >
+              <Bell className="w-4 h-4 sm:h-5 sm:w-5" />
+              <span>Alerts</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { LogOut, Moon, Sun, Search, Menu } from "lucide-react";
 const Navbar = () => {
   const { user, signOutUser } = useContext(Authcontext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   
   const handleSignOut = async () => {
     try {
@@ -23,10 +24,8 @@ const Navbar = () => {
     setDropdownOpen((prev) => !prev);
   };
 
-  const { theme, toggleTheme } = useContext(ThemeContext);
-
   return (
-    <div className="fixed top-0 left-0 z-50 w-full mb-5 border-b backdrop-blur-md bg-base-100/80 border-base-200 dark:border-base-700 lg:px-15 sm:px-10 navbar">
+    <div className="fixed top-0 left-0 z-50 w-full mb-5 border-b backdrop-blur-md bg-base-100/80 border-base-200 lg:px-15 sm:px-10 navbar">
       {/* Logo */}
       <div className="navbar-start">
         <Link to="/" className="text-3xl font-black logo-text font-display">
@@ -131,7 +130,7 @@ const Navbar = () => {
       {/* Right Section */}
       <div className="flex items-center gap-2 navbar-end">
         <button 
-          className="btn btn-ghost btn-circle"
+          className="btn btn-ghost btn-circle text-base-content"
           onClick={toggleTheme}
           aria-label="Toggle theme"
         >
@@ -167,7 +166,7 @@ const Navbar = () => {
           <div className="drawer-content">
             <label 
               htmlFor="nav-drawer" 
-              className="btn btn-ghost btn-circle drawer-button"
+              className="btn btn-ghost btn-circle drawer-button text-base-content"
             >
               <Menu className="w-5 h-5" />
             </label>
@@ -177,7 +176,7 @@ const Navbar = () => {
             <ul className="min-h-full p-4 menu w-80 bg-base-200 text-base-content">
               <li className="mb-2">
                 <button 
-                  className="justify-start gap-2 btn btn-ghost"
+                  className="justify-start gap-2 btn btn-ghost text-base-content"
                   onClick={toggleTheme}
                 >
                   {theme === "light" ? (
@@ -195,17 +194,17 @@ const Navbar = () => {
               </li>
               <div className="divider"></div>
               <li>
-                <NavLink to="/" className="active:bg-primary/20">
+                <NavLink to="/" className="active:bg-primary/20 text-base-content">
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/allItems" className="active:bg-primary/20">
+                <NavLink to="/allItems" className="active:bg-primary/20 text-base-content">
                   Lost & Found Items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/how-it-works" className="active:bg-primary/20">
+                <NavLink to="/how-it-works" className="active:bg-primary/20 text-base-content">
                   How It Works
                 </NavLink>
               </li>
@@ -213,17 +212,17 @@ const Navbar = () => {
                 <>
                   <div className="divider">User Menu</div>
                   <li>
-                    <NavLink to="/addItems" className="active:bg-primary/20">
+                    <NavLink to="/addItems" className="active:bg-primary/20 text-base-content">
                       Add Lost Item
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/myItems" className="active:bg-primary/20">
+                    <NavLink to="/myItems" className="active:bg-primary/20 text-base-content">
                       Manage My Items
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/recoveredItems" className="active:bg-primary/20">
+                    <NavLink to="/recoveredItems" className="active:bg-primary/20 text-base-content">
                       All Recovered Items
                     </NavLink>
                   </li>

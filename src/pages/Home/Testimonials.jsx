@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from 'react';
 import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ThemeContext } from '../../context/Authcontext/ThemeContext';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -53,7 +54,9 @@ const testimonials = [
 const PrevArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute left-0 z-10 p-3 transition-all -translate-y-1/2 bg-white rounded-full shadow-lg cursor-pointer md:p-4 top-1/2 hover:bg-gray-50 group"
+    className={`absolute left-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg cursor-pointer md:p-4 top-1/2 hover:bg-gray-50 group ${
+      theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+    }`}
     aria-label="Previous slide"
   >
     <ChevronLeft className="w-6 h-6 text-gray-600 transition-transform group-hover:-translate-x-0.5" />
@@ -63,7 +66,9 @@ const PrevArrow = ({ onClick }) => (
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="absolute right-0 z-10 p-3 transition-all -translate-y-1/2 bg-white rounded-full shadow-lg cursor-pointer md:p-4 top-1/2 hover:bg-gray-50 group"
+    className={`absolute right-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg cursor-pointer md:p-4 top-1/2 hover:bg-gray-50 group ${
+      theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+    }`}
     aria-label="Next slide"
   >
     <ChevronRight className="w-6 h-6 text-gray-600 transition-transform group-hover:translate-x-0.5" />
@@ -84,70 +89,73 @@ const settings = {
 };
 
 const Testimonials = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div className="relative max-w-6xl px-4 py-16 mx-auto md:py-24">
-    <div className="absolute top-0 w-32 h-32 -translate-x-1/2 rounded-full left-1/2 dark:bg-gray-800 blur-3xl opacity-30 dark:opacity-40" />
-  
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="relative mb-16 text-center"
-    >
-      <h2 className="text-4xl font-bold dark:text-white md:text-5xl">
-        What Our Users Say
-      </h2>
-      <div className="w-24 h-1 mx-auto mt-4 rounded-full dark:bg-purple-400" />
-    </motion.div>
-  
-    <div className="relative px-8 md:px-16">
-      <Slider {...settings}>
-        {testimonials.map((testimonial, index) => (
-          <motion.div
-            key={index}
-            className="outline-none"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <div className="relative px-6 py-10 overflow-hidden shadow-lg dark:bg-gray-900 rounded-2xl md:px-12 md:py-16">
-              <div className="absolute top-0 right-0 w-40 h-40 translate-x-20 -translate-y-20 rounded-full dark:bg-gray-700 blur-3xl opacity-20 dark:opacity-30" />
-              
-              <Quote className="absolute dark:text-gray-400 w-28 h-28 top-4 right-4 rotate-12" />
-  
-              <div className="relative flex flex-col items-center">
-                <div className="relative mb-8 group">
-                  <div className="absolute inset-0 transition-opacity bg-blue-100 rounded-full dark:bg-gray-800 blur-md opacity-30 group-hover:opacity-40" />
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="relative object-cover w-32 h-32 border-4 border-white rounded-full shadow-lg dark:border-gray-700"
-                  />
-                </div>
-  
-                <blockquote className="max-w-2xl mx-auto mb-8 text-center">
-                  <p className="text-xl dark:text-gray-300 md:text-2xl">
-                    "{testimonial.story}"
-                  </p>
-                </blockquote>
-  
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold dark:text-white md:text-2xl">
-                    {testimonial.name}
-                  </h3>
-                  <p className="mt-1 dark:text-gray-400">
-                    {testimonial.location}
-                  </p>
+    <div className={`relative max-w-6xl px-4 py-16 mx-auto md:py-24 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+      <div className="absolute top-0 w-32 h-32 -translate-x-1/2 rounded-full left-1/2 dark:bg-gray-800 blur-3xl opacity-30 dark:opacity-40" />
+    
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative mb-16 text-center"
+      >
+        <h2 className="text-4xl font-bold md:text-5xl">
+          What Our Users Say
+        </h2>
+        <div className="w-24 h-1 mx-auto mt-4 rounded-full dark:bg-purple-400" />
+      </motion.div>
+    
+      <div className="relative px-8 md:px-16">
+        <Slider {...settings}>
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={index}
+              className="outline-none"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <div className={`relative px-6 py-10 overflow-hidden shadow-lg rounded-2xl md:px-12 md:py-16 ${
+                theme === 'dark' ? 'bg-gray-900' : 'bg-white'
+              }`}>
+                <div className="absolute top-0 right-0 w-40 h-40 translate-x-20 -translate-y-20 rounded-full dark:bg-gray-700 blur-3xl opacity-20 dark:opacity-30" />
+                
+                <Quote className="absolute dark:text-gray-400 w-28 h-28 top-4 right-4 rotate-12" />
+    
+                <div className="relative flex flex-col items-center">
+                  <div className="relative mb-8 group">
+                    <div className="absolute inset-0 transition-opacity bg-blue-100 rounded-full dark:bg-gray-800 blur-md opacity-30 group-hover:opacity-40" />
+                    <img
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="relative object-cover w-32 h-32 border-4 border-white rounded-full shadow-lg dark:border-gray-700"
+                    />
+                  </div>
+    
+                  <blockquote className="max-w-2xl mx-auto mb-8 text-center">
+                    <p className="text-xl md:text-2xl">
+                      "{testimonial.story}"
+                    </p>
+                  </blockquote>
+    
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold md:text-2xl">
+                      {testimonial.name}
+                    </h3>
+                    <p className="mt-1">
+                      {testimonial.location}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
-      </Slider>
+            </motion.div>
+          ))}
+        </Slider>
+      </div>
     </div>
-  </div>
-  
   );
 };
 
