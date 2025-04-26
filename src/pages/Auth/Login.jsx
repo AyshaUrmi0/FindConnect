@@ -67,28 +67,38 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen light:bg-blue-100">
+    <div className={`flex items-center justify-center min-h-screen ${theme === "dark" ? "bg-gray-800" : "bg-blue-100"}`}>
+
       <div className="w-full max-w-md p-4 mx-4 bg-white rounded-lg shadow-md sm:p-6 md:w-96">
         <h2 className="text-2xl font-bold text-center text-blue-600">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mt-4">
             <label className="block text-sm font-medium">Email</label>
             <input
-              type="email"
-              name="email"
-              className="w-full px-3 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              required
-            />
+  type="email"
+  name="email"
+  placeholder="Enter your email"
+  className={`w-full px-3 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300 ${
+    theme === "dark" ? "bg-gray-700 text-white placeholder-gray-300" : "bg-white"
+  }`}
+  required
+/>
+
+
           </div>
 
           <div className="mt-4">
             <label className="block text-sm font-medium">Password</label>
             <input
-              type="password"
-              name="password"
-              className="w-full px-3 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              required
-            />
+  type="password"
+  name="password"
+  placeholder="Enter your password"
+  className={`w-full px-3 py-2 mt-1 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300 ${
+    theme === "dark" ? "bg-gray-700 text-white placeholder-gray-300" : "bg-white"
+  }`}
+  required
+/>
+
           </div>
 
          
@@ -100,10 +110,9 @@ const Login = () => {
           </button>
         </form>
 
-       
-        <div className="w-full py-2 mt-4 ">
-          <GoogleButton onClick={handleGoogleSignIn} />
-        </div>
+            <div className="flex items-center justify-center w-full py-2 mt-4">
+        <GoogleButton onClick={handleGoogleSignIn} />
+      </div>
 
         <p className="mt-4 text-sm text-center">
           Don't have an account?{" "}
