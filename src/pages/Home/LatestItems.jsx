@@ -30,7 +30,7 @@ const LatestItems = () => {
   }
 
   return (
-    <div className={`container px-4 mx-auto my-12 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+    <div className={`container px-4 mx-auto my-12 ${theme === 'dark' ? ' text-white' : ' text-black'}`}>
       {/* Hero Section */}
       <div className="relative mb-12 text-center">
         <h2 className="mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
