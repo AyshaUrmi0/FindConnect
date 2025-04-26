@@ -98,68 +98,7 @@ const ItemDetails = () => {
        
        
       });
-      //console.log(filter);
-      
-    // if ( !filter) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Already Recovered',
-    //     text: 'This item is already marked as recovered!',
-    //   });
-    //   return;
-    // }
-
-    // else{
-    //   const recoveryData = {
-    //     recoveredLocation,
-    //     recoveredDate,
-    //     recoveredBy: {
-         
-    //      status: 'recovered',
-    //       name: user?.displayName || 'Anonymous',
-    //       email: user?.email,
-    //       image: user?.photoURL || 'https://via.placeholder.com/150',
-    //     },
-    //     itemDetails: { id, title, description, type, category, location, date },
-    //   };
     
-    //   fetch('https://find-connect-server.vercel.app/recoveredItems', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(recoveryData),
-    //   })
-    //     .then((res) => res.json())
-    //     .then(() => {
-    //       fetch(`https://find-connect-server.vercel.app/status/${id}`, {
-    //         method: 'PATCH',
-    //        // headers: { 'Content-Type': 'application/json' },
-    //        // body: JSON.stringify({ status: 'recovered' }),
-    //       }).then(() => {
-    //         Swal.fire({
-    //           icon: 'success',
-    //           title: 'Success!',
-    //           text: 'Item successfully marked as recovered!',
-    //           confirmButtonText: 'Go to Recovered Items',
-    //         }).then(() => {
-    //           setModalOpen(false);
-    //           navigate('/recoveredItems');
-    //         });
-    //       });
-    //     })
-    //     .catch((err) => {
-    //       Swal.fire({
-    //         icon: 'error',
-    //         title: 'Error',
-    //         text: 'Something went wrong. Please try again!',
-    //       });
-    //       console.error(err);
-    //     });
-
-    // }
-
-    // })
-    // .catch((err) => console.error(err));
-
 
 
   
