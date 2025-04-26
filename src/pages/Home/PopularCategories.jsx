@@ -20,10 +20,12 @@ const PopularCategories = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`container px-4 mx-auto my-16 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      <h2 className="mb-4 text-4xl font-bold text-center bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-        Popular Categories
-      </h2>
+    <div className={`container px-4 mx-auto my-16 ${theme === 'dark' ? ' text-white' : ' text-black'}`}>
+      <h2 className={`mb-4 text-4xl font-bold text-center ${
+  theme === 'dark' ? 'text-white' : 'text-black'
+}`}>
+  Popular Categories
+</h2>
       <p className={`text-center ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
         Here are some of the most popular categories for lost and found items.
       </p>
@@ -55,7 +57,7 @@ const PopularCategories = () => {
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
               <motion.div
-                className="mb-4 text-5xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+                className="mb-4 text-5xl text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
               >

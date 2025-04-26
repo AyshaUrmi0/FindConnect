@@ -93,7 +93,7 @@ const Testimonials = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`relative max-w-6xl px-4 py-16 mx-auto md:py-24 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+    <div className={`relative max-w-6xl px-4 py-16 mx-auto md:py-24 ${theme === 'dark' ? 'text-white' : ' text-black'}`}>
       <div className="absolute top-0 w-32 h-32 -translate-x-1/2 rounded-full left-1/2 dark:bg-gray-800 blur-3xl opacity-30 dark:opacity-40" />
     
       <motion.div
