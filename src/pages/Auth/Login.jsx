@@ -6,9 +6,11 @@ import { GoogleButton } from "react-google-button";
 import loginAnimation from '../../assets/Lottie/Login.json';
 import Authcontext from "../../context/Authcontext/Authcontext";
 import axios from "axios";
+import { ThemeContext } from "../../context/Authcontext/ThemeContext";
 
 
 const Login = () => {
+  const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const { signInUser, signInWithGoogle, user, loading } = useContext(Authcontext);
   const location=useLocation()
@@ -65,7 +67,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100">
+    <div className="flex items-center justify-center min-h-screen light:bg-blue-100">
       <div className="w-full max-w-md p-4 mx-4 bg-white rounded-lg shadow-md sm:p-6 md:w-96">
         <h2 className="text-2xl font-bold text-center text-blue-600">Login</h2>
         <form onSubmit={handleLogin}>
