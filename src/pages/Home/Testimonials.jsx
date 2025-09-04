@@ -181,7 +181,7 @@ const Testimonials = () => {
         transition={{ duration: 0.6 }}
         className="relative mb-16 text-center"
       >
-        <h2 className="text-4xl font-bold md:text-5xl">
+        <h2 className={`text-4xl font-bold md:text-5xl ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
           What Our Users Say
         </h2>
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
@@ -234,7 +234,7 @@ const Testimonials = () => {
                   </div>
     
                   <blockquote className="max-w-2xl mx-auto mb-6 text-center">
-                    <p className="text-xl md:text-2xl text-gray-800 dark:text-white">
+                    <p className={`text-xl md:text-2xl ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
                       "{testimonial.story}"
                     </p>
                   </blockquote>
@@ -245,10 +245,10 @@ const Testimonials = () => {
                   </div>
     
                   <div className="text-center mb-6">
-                    <h3 className="text-xl font-semibold md:text-2xl text-gray-900 dark:text-white">
+                    <h3 className={`text-xl font-semibold md:text-2xl ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                       {testimonial.name}
                     </h3>
-                    <div className="flex items-center justify-center gap-2 mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    <div className={`flex items-center justify-center gap-2 mt-1 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                       <MapPin className="w-4 h-4" />
                       <span>{testimonial.location}</span>
                       <span>•</span>
@@ -260,7 +260,7 @@ const Testimonials = () => {
                   {/* Interactive Actions */}
                   <div className="flex items-center justify-center gap-6">
                     <motion.button
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                      className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100 ${theme === 'dark' ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-600'}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleLike(index);
@@ -275,7 +275,7 @@ const Testimonials = () => {
                     </motion.button>
 
                     <motion.button
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                      className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100 ${theme === 'dark' ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-600'}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleShare(testimonial);
@@ -287,7 +287,7 @@ const Testimonials = () => {
                       <span>Share</span>
                     </motion.button>
 
-                    <div className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <div className={`flex items-center gap-2 px-4 py-2 text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                       <MessageCircle className="w-4 h-4" />
                       <span>{testimonial.comments}</span>
                     </div>
@@ -306,9 +306,9 @@ const Testimonials = () => {
         transition={{ duration: 0.6, delay: 0.8 }}
         className="mt-12 text-center"
       >
-        <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-          Join our community and share your success story!
-        </p>
+                 <p className={`mb-4 text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+           Join our community and share your success story!
+         </p>
         <motion.button
           className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-all bg-purple-600 border-2 border-purple-600 rounded-lg hover:bg-purple-700 hover:shadow-lg group"
           whileHover={{ scale: 1.05 }}
