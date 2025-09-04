@@ -78,6 +78,20 @@ const Navbar = () => {
               How It Works
             </NavLink>
           </li>
+          <li>
+            <NavLink 
+              to="/statistics" 
+              className={({ isActive }) => 
+                `px-4 py-2 rounded-lg transition-all ${
+                  isActive 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "hover:bg-base-200 text-base-content"
+                }`
+              }
+            >
+              Statistics
+            </NavLink>
+          </li>
           {user && (
             <>
               <li>
@@ -203,11 +217,16 @@ const Navbar = () => {
                   Lost & Found Items
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/how-it-works" className="active:bg-primary/20 text-base-content">
-                  How It Works
-                </NavLink>
-              </li>
+                             <li>
+                 <NavLink to="/how-it-works" className="active:bg-primary/20 text-base-content">
+                   How It Works
+                 </NavLink>
+               </li>
+               <li>
+                 <NavLink to="/statistics" className="active:bg-primary/20 text-base-content">
+                   Statistics
+                 </NavLink>
+               </li>
               {user && (
                 <>
                   <div className="divider">User Menu</div>

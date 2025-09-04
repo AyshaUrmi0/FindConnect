@@ -18,6 +18,7 @@ import LatestItems from "../pages/Home/LatestItems";
 import PopularCategories from "../pages/Home/PopularCategories";
 import Testimonials from "../pages/Home/Testimonials";
 import HowItWorks from "../pages/Items/HowItWorks";
+import Statistics from "../components/Statistics";
 // import ImageProcessSection from "../pages/Home/ImageProcessSection ";
   const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ import HowItWorks from "../pages/Items/HowItWorks";
         { path: "/how-it-works",
           element: <HowItWorks></HowItWorks>
 
+        },
+        {
+          path: "/statistics",
+          element: <Statistics />
         },
         {
           path: "/items/:id",

@@ -173,18 +173,18 @@ const LatestItems = () => {
   }
 
   return (
-    <div className={`container px-4 mx-auto my-12 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+    <div className={`container px-4 mx-auto my-8 md:my-12 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative mb-12 text-center"
+        className="relative mb-8 md:mb-12 text-center"
       >
-        <h2 className="mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">
+        <h2 className="mb-4 text-2xl font-bold md:text-3xl lg:text-4xl xl:text-5xl">
           Recent Find & Lost Items
         </h2>
-        <p className={`max-w-2xl mx-auto md:text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`max-w-2xl mx-auto text-sm md:text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
           Have a recent find or lost item? Share it with the community and help others reconnect with their belongings.
         </p>
         <div className="absolute top-0 w-24 h-1 -translate-x-1/2 left-1/2 bg-gradient-to-r from-purple-500 to-blue-500" />
@@ -195,7 +195,7 @@ const LatestItems = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className={`max-w-4xl mx-auto p-6 rounded-2xl shadow-xl mb-8 ${
+        className={`max-w-4xl mx-auto p-4 md:p-6 rounded-2xl shadow-xl mb-8 ${
           theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
         }`}
       >
@@ -216,11 +216,11 @@ const LatestItems = () => {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <motion.button
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+              className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
                 theme === 'dark' 
                   ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
                   : 'bg-white border-gray-300 hover:bg-gray-50'
@@ -248,7 +248,7 @@ const LatestItems = () => {
 
             <motion.button
               onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+              className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
                 theme === 'dark' 
                   ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
                   : 'bg-white border-gray-300 hover:bg-gray-50'
@@ -257,11 +257,12 @@ const LatestItems = () => {
               whileTap={{ scale: 0.95 }}
             >
               {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
-              {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+              <span className="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
+              <span className="sm:hidden">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
             </motion.button>
           </div>
 
-          <div className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+          <div className={`text-sm text-center md:text-left ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
             {filteredItems.length} items found
           </div>
         </div>
@@ -287,7 +288,7 @@ const LatestItems = () => {
             key="items-grid"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {filteredItems.map((item, index) => (
               <motion.div
@@ -348,7 +349,7 @@ const LatestItems = () => {
                 </div>
 
                 {/* Content Section */}
-                <div className="p-6">
+                <div className="p-4 md:p-6">
                   <div className="flex items-start justify-between mb-3">
                     <h3 className={`text-lg font-semibold line-clamp-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                       {item.title}
@@ -372,7 +373,7 @@ const LatestItems = () => {
                   )}
 
                   {/* Location and Date */}
-                  <div className="flex items-center gap-4 mb-4 text-sm">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 mb-4 text-sm">
                     <div className="flex items-center gap-1">
                       <MapPin className="w-4 h-4 text-gray-500" />
                       <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
