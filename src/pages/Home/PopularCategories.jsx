@@ -69,7 +69,7 @@ const PopularCategories = () => {
   };
 
   return (
-    <div className={`container px-4 mx-auto my-16 ${theme === 'dark' ? ' text-white' : ' text-black'}`}>
+    <div className={`container px-4 mx-auto my-16 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
@@ -77,7 +77,7 @@ const PopularCategories = () => {
         className="text-center mb-12"
       >
         <h2 className={`mb-4 text-4xl font-bold ${
-          theme === 'dark' ? 'text-white' : 'text-black'
+          theme === 'dark' ? 'text-white' : 'text-gray-900'
         }`}>
           Popular Categories
         </h2>
@@ -93,8 +93,8 @@ const PopularCategories = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex items-center gap-2"
           >
-            <TrendingUp className="w-5 h-5 text-purple-500" />
-            <span className="text-sm font-medium">Most Active</span>
+            <TrendingUp className="w-5 h-5 text-purple-600" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Most Active</span>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -102,8 +102,8 @@ const PopularCategories = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex items-center gap-2"
           >
-            <Users className="w-5 h-5 text-purple-500" />
-            <span className="text-sm font-medium">Community Driven</span>
+            <Users className="w-5 h-5 text-purple-600" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Community Driven</span>
           </motion.div>
         </div>
       </motion.div>
@@ -127,7 +127,7 @@ const PopularCategories = () => {
               className={`relative p-6 text-center min-h-[320px] rounded-xl shadow-lg cursor-pointer
                 ${theme === 'dark' 
                   ? 'bg-gray-900 border-gray-700 hover:border-purple-400' 
-                  : 'bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-100 hover:border-indigo-500'}
+                  : 'bg-white border-gray-200 hover:border-purple-500 shadow-xl'}
                 border hover:shadow-2xl transition-all duration-300 overflow-hidden group`}
               whileHover={{ 
                 scale: 1.05,
@@ -157,7 +157,7 @@ const PopularCategories = () => {
 
               {/* Category Info */}
               <div className="relative">
-                <h3 className={`mt-4 text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                <h3 className={`mt-4 text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                   {category.name}
                 </h3>
                 <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -165,7 +165,7 @@ const PopularCategories = () => {
                 </p>
                 
                 {/* Item Count Badge */}
-                <div className="inline-flex items-center gap-1 px-3 py-1 mb-4 text-xs font-medium text-purple-600 bg-purple-100 rounded-full dark:bg-purple-900 dark:text-purple-300">
+                <div className="inline-flex items-center gap-1 px-3 py-1 mb-4 text-xs font-medium text-purple-700 bg-purple-100 rounded-full dark:bg-purple-900 dark:text-purple-300 border border-purple-200 dark:border-purple-700">
                   <Search className="w-3 h-3" />
                   {category.count} items
                 </div>
@@ -199,7 +199,7 @@ const PopularCategories = () => {
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
           <Link
             to="/allItems"
-            className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-purple-600 transition-all border-2 border-purple-600 rounded-lg hover:bg-purple-600 hover:text-white hover:shadow-lg group"
+            className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-purple-600 transition-all border-2 border-purple-600 rounded-lg hover:bg-purple-600 hover:text-white hover:shadow-lg group bg-white dark:bg-transparent"
           >
             <Search className="w-4 h-4" />
             Browse All Items
