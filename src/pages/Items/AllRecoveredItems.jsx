@@ -130,14 +130,14 @@ const AllRecoveredItems = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-[400px] pt-20">
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen pt-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="container px-4 py-8 mx-auto">
         {/* Header */}
         <motion.div
@@ -157,11 +157,11 @@ const AllRecoveredItems = () => {
             >
               <ArrowLeft className="w-5 h-5" />
             </motion.button>
-            <h1 className={`text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className={`text-2xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               Recovered Items
             </h1>
           </div>
-          <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`text-base md:text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
             Successfully reunited items with their owners
           </p>
           <div className="mt-4 text-sm text-gray-500">
@@ -174,7 +174,7 @@ const AllRecoveredItems = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className={`max-w-6xl mx-auto p-6 rounded-2xl shadow-xl mb-8 ${
+          className={`max-w-6xl mx-auto p-4 md:p-6 rounded-2xl shadow-xl mb-8 ${
             theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
           }`}
         >
@@ -195,8 +195,8 @@ const AllRecoveredItems = () => {
           </div>
 
           {/* Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <motion.button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
@@ -208,7 +208,7 @@ const AllRecoveredItems = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Filter className="w-4 h-4" />
-                Filters
+                <span className="hidden sm:inline">Filters</span>
               </motion.button>
 
               <select
@@ -236,7 +236,8 @@ const AllRecoveredItems = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
-                {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+                <span className="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
+                <span className="sm:hidden">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
               </motion.button>
             </div>
 
@@ -253,12 +254,14 @@ const AllRecoveredItems = () => {
               {isTableLayout ? (
                 <>
                   <Grid3X3 className="w-4 h-4" />
-                  <span>Grid View</span>
+                  <span className="hidden sm:inline">Grid View</span>
+                  <span className="sm:hidden">Grid</span>
                 </>
               ) : (
                 <>
                   <List className="w-4 h-4" />
-                  <span>Table View</span>
+                  <span className="hidden sm:inline">Table View</span>
+                  <span className="sm:hidden">Table</span>
                 </>
               )}
             </motion.button>
@@ -285,29 +288,33 @@ const AllRecoveredItems = () => {
               key="content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className={`max-w-6xl mx-auto p-6 rounded-2xl shadow-xl ${
+              className={`max-w-6xl mx-auto p-4 md:p-6 rounded-2xl shadow-xl ${
                 theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
               }`}
             >
               {isTableLayout ? (
                 // Table Layout
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm border-collapse md:text-base">
+                  <table className="w-full text-xs border-collapse sm:text-sm md:text-base">
                     <thead>
                       <tr className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                        <th className={`px-4 py-3 text-left font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          Item Title
+                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <span className="hidden sm:inline">Item Title</span>
+                          <span className="sm:hidden">Title</span>
                         </th>
-                        <th className={`px-4 py-3 text-left font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          Recovered Location
+                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <span className="hidden sm:inline">Recovered Location</span>
+                          <span className="sm:hidden">Location</span>
                         </th>
-                        <th className={`px-4 py-3 text-left font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          Recovered Date
+                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <span className="hidden sm:inline">Recovered Date</span>
+                          <span className="sm:hidden">Date</span>
                         </th>
-                        <th className={`px-4 py-3 text-left font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          Recovered By
+                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <span className="hidden sm:inline">Recovered By</span>
+                          <span className="sm:hidden">By</span>
                         </th>
-                        <th className={`px-4 py-3 text-left font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                           Actions
                         </th>
                       </tr>
@@ -321,39 +328,39 @@ const AllRecoveredItems = () => {
                           transition={{ duration: 0.5, delay: index * 0.1 }}
                           className={`border-b ${theme === 'dark' ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-200 hover:bg-gray-50'}`}
                         >
-                          <td className="px-4 py-3">
+                          <td className="px-2 py-3 sm:px-4">
                             <div className="flex items-center gap-2">
                               <CheckCircle className="w-4 h-4 text-green-500" />
-                              <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                              <span className={`font-medium truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                                 {item.itemDetails?.title}
                               </span>
                             </div>
                           </td>
-                          <td className="px-4 py-3">
+                          <td className="px-2 py-3 sm:px-4">
                             <div className="flex items-center gap-2">
                               <MapPin className="w-4 h-4 text-gray-500" />
-                              <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
+                              <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                                 {item.recoveredLocation}
                               </span>
                             </div>
                           </td>
-                          <td className="px-4 py-3">
+                          <td className="px-2 py-3 sm:px-4">
                             <div className="flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-gray-500" />
-                              <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
+                              <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                                 {new Date(item.recoveredDate).toLocaleDateString()}
                               </span>
                             </div>
                           </td>
-                          <td className="px-4 py-3">
+                          <td className="px-2 py-3 sm:px-4">
                             <div className="flex items-center gap-2">
                               <User className="w-4 h-4 text-gray-500" />
-                              <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
+                              <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                                 {item.recoveredBy?.name}
                               </span>
                             </div>
                           </td>
-                          <td className="px-4 py-3">
+                          <td className="px-2 py-3 sm:px-4">
                             <motion.button
                               onClick={() => handleShare(item)}
                               className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
@@ -370,21 +377,21 @@ const AllRecoveredItems = () => {
                 </div>
               ) : (
                 // Card Layout
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredItems.map((item, index) => (
                     <motion.div
                       key={item._id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className={`p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                      className={`p-4 md:p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
                         theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-white border border-gray-200'
                       }`}
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-5 h-5 text-green-500" />
-                          <h3 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                          <h3 className={`text-base md:text-lg font-semibold truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                             {item.itemDetails?.title}
                           </h3>
                         </div>
@@ -401,7 +408,7 @@ const AllRecoveredItems = () => {
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <MapPin className="w-4 h-4 text-gray-500" />
-                          <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <span className={`text-sm truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                             <span className="font-medium">Location:</span> {item.recoveredLocation}
                           </span>
                         </div>
@@ -415,7 +422,7 @@ const AllRecoveredItems = () => {
 
                         <div className="flex items-center gap-2">
                           <User className="w-4 h-4 text-gray-500" />
-                          <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                          <span className={`text-sm truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                             <span className="font-medium">By:</span> {item.recoveredBy?.name}
                           </span>
                         </div>
