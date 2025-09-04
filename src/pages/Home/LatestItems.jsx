@@ -187,7 +187,6 @@ const LatestItems = () => {
         <p className={`max-w-2xl mx-auto text-sm md:text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
           Have a recent find or lost item? Share it with the community and help others reconnect with their belongings.
         </p>
-        <div className="absolute top-0 w-24 h-1 -translate-x-1/2 left-1/2 bg-gradient-to-r from-purple-500 to-blue-500" />
       </motion.div>
 
       {/* Search and Controls */}
