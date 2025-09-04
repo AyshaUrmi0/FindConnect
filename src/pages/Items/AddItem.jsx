@@ -172,7 +172,7 @@ const AddItem = () => {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen pt-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="container px-4 py-8 mx-auto">
         {/* Header */}
         <motion.div

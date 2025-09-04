@@ -24,8 +24,15 @@ const Navbar = () => {
     setDropdownOpen((prev) => !prev);
   };
 
+  const closeDrawer = () => {
+    const drawerCheckbox = document.getElementById('nav-drawer');
+    if (drawerCheckbox) {
+      drawerCheckbox.checked = false;
+    }
+  };
+
   return (
-    <div className="fixed top-0 left-0 z-50 w-full mb-5 border-b backdrop-blur-md bg-base-100/80 border-base-200 lg:px-15 sm:px-10 navbar">
+    <div className="fixed top-0 left-0 z-50 w-full mb-5 border-b backdrop-blur-md bg-base-100/80 border-base-200 px-4 lg:px-15 navbar">
       {/* Logo */}
       <div className="navbar-start">
         <Link to="/" className="text-3xl font-black logo-text font-display">
@@ -144,7 +151,7 @@ const Navbar = () => {
       {/* Right Section */}
       <div className="flex items-center gap-2 navbar-end">
         <button 
-          className="btn btn-ghost btn-circle text-base-content"
+          className="btn btn-ghost btn-circle text-base-content hidden lg:flex"
           onClick={toggleTheme}
           aria-label="Toggle theme"
         >
@@ -158,14 +165,14 @@ const Navbar = () => {
         {!user ? (
           <Link 
             to="/login" 
-            className="normal-case btn btn-primary btn-sm"
+            className="normal-case btn btn-primary btn-sm hidden lg:inline-flex"
           >
             Login
           </Link>
         ) : (
           <button 
             onClick={handleSignOut} 
-            className="gap-2 normal-case btn btn-error btn-sm"
+            className="gap-2 normal-case btn btn-error btn-sm hidden lg:inline-flex"
           >
             <LogOut className="w-4 h-4" />
             Logout
@@ -173,7 +180,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Navbar Drawer for Small Screens */}
+            {/* Navbar Drawer for Small Screens */}
       <div className="navbar-center lg:hidden">
         <div className="drawer">
           <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
@@ -208,46 +215,77 @@ const Navbar = () => {
               </li>
               <div className="divider"></div>
               <li>
-                <NavLink to="/" className="active:bg-primary/20 text-base-content">
+                <NavLink 
+                  to="/" 
+                  className="active:bg-primary/20 text-base-content"
+                  onClick={closeDrawer}
+                >
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/allItems" className="active:bg-primary/20 text-base-content">
+                <NavLink 
+                  to="/allItems" 
+                  className="active:bg-primary/20 text-base-content"
+                  onClick={closeDrawer}
+                >
                   Lost & Found Items
                 </NavLink>
               </li>
-                             <li>
-                 <NavLink to="/how-it-works" className="active:bg-primary/20 text-base-content">
-                   How It Works
-                 </NavLink>
-               </li>
-               <li>
-                 <NavLink to="/statistics" className="active:bg-primary/20 text-base-content">
-                   Statistics
-                 </NavLink>
-               </li>
+              <li>
+                <NavLink 
+                  to="/how-it-works" 
+                  className="active:bg-primary/20 text-base-content"
+                  onClick={closeDrawer}
+                >
+                  How It Works
+                </NavLink>
+              </li>
+              <li>
+                <NavLink 
+                  to="/statistics" 
+                  className="active:bg-primary/20 text-base-content"
+                  onClick={closeDrawer}
+                >
+                  Statistics
+                </NavLink>
+              </li>
               {user && (
                 <>
                   <div className="divider">User Menu</div>
                   <li>
-                    <NavLink to="/addItems" className="active:bg-primary/20 text-base-content">
+                    <NavLink 
+                      to="/addItems" 
+                      className="active:bg-primary/20 text-base-content"
+                      onClick={closeDrawer}
+                    >
                       Add Lost Item
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/myItems" className="active:bg-primary/20 text-base-content">
+                    <NavLink 
+                      to="/myItems" 
+                      className="active:bg-primary/20 text-base-content"
+                      onClick={closeDrawer}
+                    >
                       Manage My Items
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/recoveredItems" className="active:bg-primary/20 text-base-content">
+                    <NavLink 
+                      to="/recoveredItems" 
+                      className="active:bg-primary/20 text-base-content"
+                      onClick={closeDrawer}
+                    >
                       All Recovered Items
                     </NavLink>
                   </li>
                   <li>
                     <button 
-                      onClick={handleSignOut}
+                      onClick={() => {
+                        handleSignOut();
+                        closeDrawer();
+                      }}
                       className="gap-2 text-error"
                     >
                       <LogOut className="w-4 h-4" />
@@ -261,6 +299,7 @@ const Navbar = () => {
                   <Link 
                     to="/login" 
                     className="mt-4 btn btn-primary"
+                    onClick={closeDrawer}
                   >
                     Login
                   </Link>

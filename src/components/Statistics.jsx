@@ -19,7 +19,7 @@ const Statistics = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center justify-center pt-20 py-12">
         <div className="text-center">
           <Loader2 className="w-12 h-12 text-purple-500 animate-spin mx-auto mb-4" />
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -32,7 +32,7 @@ const Statistics = () => {
 
   if (error || !statistics) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center pt-20 py-12">
         <div className="text-6xl mb-4">📊</div>
         <h3 className="text-xl font-semibold mb-2">Statistics Unavailable</h3>
         <p className={`text-gray-500 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -78,7 +78,7 @@ const Statistics = () => {
   ];
 
   return (
-    <div className={`py-12 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`pt-20 py-12 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
