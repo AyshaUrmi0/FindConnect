@@ -9,6 +9,7 @@ import { LogOut, Moon, Sun, Search, Menu } from "lucide-react";
 const Navbar = () => {
   const { user, signOutUser } = useContext(Authcontext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
   
   const handleSignOut = async () => {
@@ -25,10 +26,16 @@ const Navbar = () => {
   };
 
   const closeDrawer = () => {
+    setDrawerOpen(false);
+    // Also try to uncheck the checkbox as backup
     const drawerCheckbox = document.getElementById('nav-drawer');
     if (drawerCheckbox) {
       drawerCheckbox.checked = false;
     }
+  };
+
+  const openDrawer = () => {
+    setDrawerOpen(true);
   };
 
   return (
@@ -183,17 +190,24 @@ const Navbar = () => {
             {/* Navbar Drawer for Small Screens */}
       <div className="navbar-center lg:hidden">
         <div className="drawer">
-          <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
+          <input 
+            id="nav-drawer" 
+            type="checkbox" 
+            className="drawer-toggle" 
+            checked={drawerOpen}
+            onChange={(e) => setDrawerOpen(e.target.checked)}
+          />
           <div className="drawer-content">
             <label 
               htmlFor="nav-drawer" 
               className="btn btn-ghost btn-circle drawer-button text-base-content"
+              onClick={openDrawer}
             >
               <Menu className="w-5 h-5" />
             </label>
           </div>
           <div className="drawer-side">
-            <label htmlFor="nav-drawer" className="drawer-overlay"></label>
+            <label htmlFor="nav-drawer" className="drawer-overlay" onClick={closeDrawer}></label>
             <ul className="min-h-full p-4 menu w-80 bg-base-200 text-base-content">
               <li className="mb-2">
                 <button 

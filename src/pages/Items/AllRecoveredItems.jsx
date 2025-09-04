@@ -194,63 +194,63 @@ const AllRecoveredItems = () => {
             />
           </div>
 
-          {/* Controls */}
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <motion.button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                  theme === 'dark' 
-                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
-                    : 'bg-white border-gray-300 hover:bg-gray-50'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Filter className="w-4 h-4" />
-                <span className="hidden sm:inline">Filters</span>
-              </motion.button>
+                     {/* Controls */}
+           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                             <motion.button
+                 onClick={() => setShowFilters(!showFilters)}
+                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
+                   theme === 'dark' 
+                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
+                     : 'bg-white border-gray-300 hover:bg-gray-50'
+                 }`}
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.95 }}
+               >
+                 <Filter className="w-4 h-4" />
+                 <span className="hidden sm:inline">Filters</span>
+               </motion.button>
 
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className={`px-4 py-2 rounded-lg border ${
-                  theme === 'dark' 
-                    ? 'bg-gray-700 border-gray-600 text-white' 
-                    : 'bg-white border-gray-300 text-gray-900'
-                }`}
-              >
-                <option value="date">Date</option>
-                <option value="title">Title</option>
-                <option value="location">Location</option>
-              </select>
+               <select
+                 value={sortBy}
+                 onChange={(e) => setSortBy(e.target.value)}
+                 className={`px-3 py-2 rounded-lg border ${
+                   theme === 'dark' 
+                     ? 'bg-gray-700 border-gray-600 text-white' 
+                     : 'bg-white border-gray-300 text-gray-900'
+                 }`}
+               >
+                 <option value="date">Date</option>
+                 <option value="title">Title</option>
+                 <option value="location">Location</option>
+               </select>
 
-              <motion.button
-                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                  theme === 'dark' 
-                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
-                    : 'bg-white border-gray-300 hover:bg-gray-50'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
-                <span className="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
-                <span className="sm:hidden">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
-              </motion.button>
+                             <motion.button
+                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
+                   theme === 'dark' 
+                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
+                     : 'bg-white border-gray-300 hover:bg-gray-50'
+                 }`}
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.95 }}
+               >
+                 {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
+                 <span className="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
+                 <span className="sm:hidden">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
+               </motion.button>
             </div>
 
-            <motion.button
-              onClick={() => setIsTableLayout(!isTableLayout)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                theme === 'dark' 
-                  ? 'bg-purple-600 hover:bg-purple-700' 
-                  : 'bg-purple-600 hover:bg-purple-700'
-              } text-white`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+                         <motion.button
+               onClick={() => setIsTableLayout(!isTableLayout)}
+               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+                 theme === 'dark' 
+                   ? 'bg-purple-600 hover:bg-purple-700' 
+                   : 'bg-purple-600 hover:bg-purple-700'
+               } text-white`}
+               whileHover={{ scale: 1.05 }}
+               whileTap={{ scale: 0.95 }}
+             >
               {isTableLayout ? (
                 <>
                   <Grid3X3 className="w-4 h-4" />
