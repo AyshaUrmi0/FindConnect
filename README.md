@@ -203,11 +203,8 @@ VITE_FIREBASE_APP_ID=your_app_id
 4. Push to the branch: `git push origin feature-name`
 5. Submit a pull request
 
-## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Team
+## 👥 Done By
 
 - **Aysha Ismail** - Full Stack Developer
 - **GitHub**: [AyshaUrmi0](https://github.com/AyshaUrmi0)
@@ -220,11 +217,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Framer Motion for smooth animations
 - Lucide for consistent icons
 
-## 📞 Support
 
-If you have any questions or need support, please open an issue on GitHub or contact us at [your-email@example.com].
 
----
-
-**Made with ❤️ by the FindConnect Team**
 
