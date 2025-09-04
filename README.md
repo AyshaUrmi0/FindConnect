@@ -159,33 +159,76 @@ FindConnect/
 FindConnect's backend is built using **Node.js, Express.js, and MongoDB**. It handles authentication, item management, and user interactions securely.
 
 ### Backend Features
-- **JWT Authentication**: Secure user sessions
+- **JWT Authentication**: Secure user sessions with cookie-based tokens
 - **RESTful APIs**: Clean API design for all operations
-- **MongoDB Integration**: Efficient data storage and retrieval
-- **File Upload**: Secure image upload and storage
-- **Search & Filtering**: Server-side search and filtering capabilities
+- **MongoDB Integration**: Efficient data storage and retrieval using MongoDB Atlas
+- **CORS Support**: Cross-origin resource sharing enabled for multiple origins
+- **Cookie Parser**: Secure cookie-based authentication
+- **Error Handling**: Comprehensive error handling and validation
+- **Environment Variables**: Secure configuration management
 
 **Backend Repository**: [FindConnect-Server](https://github.com/AyshaUrmi0/FindConnect-Server)
 
+### Backend Technology Stack
+- **Node.js**: JavaScript runtime environment
+- **Express.js**: Web application framework
+- **MongoDB Atlas**: Cloud-based NoSQL database
+- **JWT**: JSON Web Tokens for authentication
+- **CORS**: Cross-Origin Resource Sharing middleware
+- **Cookie Parser**: Cookie parsing middleware
+- **Body Parser**: Request body parsing
+- **Vercel**: Serverless deployment platform
+
 ## 📊 API Endpoints
 
-- `GET /Items` - Get all items
-- `POST /addedItems` - Add new item
-- `PUT /items/:id` - Update item
-- `DELETE /items/:id` - Delete item
+### Authentication
+- `POST /jwt` - Generate JWT token for user authentication
+- `POST /logout` - Clear authentication token
+
+### Items Management
+- `GET /items` - Get latest 6 items (sorted by date)
+- `GET /allItems` - Get all items
+- `GET /items/:id` - Get specific item by ID
+- `POST /addedItems` - Add new item (inserts into both collections)
+- `PUT /addedItems/:id` - Update item
+- `DELETE /addedItems/:id` - Delete item
+- `GET /addedItems` - Get user's added items (requires authentication)
+- `GET /addedItems/:id` - Get specific added item by ID
+
+### Recovery Management
 - `POST /recoveredItems` - Mark item as recovered
-- `GET /recoveredItems` - Get recovered items
+- `GET /recoveredItems` - Get recovered items by user email
+- `PUT /recoveredItems/:id` - Update item status to recovered
+- `PATCH /status/:id` - Update item status to recovered
+
+### Database Collections
+- **Items**: Main collection for all lost/found items
+- **addedItems**: Collection for user-added items
+- **allRecoveredItems**: Collection for recovered items
+
+### Security Features
+- **JWT Token Verification**: Middleware for protected routes
+- **Cookie-based Authentication**: Secure token storage
+- **CORS Configuration**: Multiple allowed origins
+- **Environment Variables**: Secure credential management
 
 ## 🚀 Deployment
 
-### Firebase Hosting
+### Frontend Deployment (Firebase Hosting)
 1. Install Firebase CLI: `npm install -g firebase-tools`
 2. Login to Firebase: `firebase login`
 3. Build the project: `npm run build`
 4. Deploy: `firebase deploy`
 
+### Backend Deployment (Vercel)
+The backend is deployed on Vercel for serverless hosting:
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
 ### Environment Variables
-Create a `.env` file with your Firebase configuration:
+
+#### Frontend (.env)
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
@@ -193,6 +236,15 @@ VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
+```
+
+#### Backend (Vercel Environment Variables)
+```env
+DB_USER=your_mongodb_username
+DB_PASS=your_mongodb_password
+JWT_SECRET=your_jwt_secret_key
+NODE_ENV=production
+PORT=3000
 ```
 
 ## 🤝 Contributing
