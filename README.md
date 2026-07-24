@@ -1,284 +1,149 @@
-# FindConnect 🔍
+# FindConnect AI 🤖🔍
 
-A modern, community-driven platform designed to help people find and recover lost items. Whether it's a misplaced phone, a stolen wallet, or a cherished family heirloom, FindConnect allows users to report lost items and connect with the community to recover them.
+**FindConnect AI** is a next-generation, **AI-powered Lost & Found Intelligence Platform** designed to revolutionize how lost belongings are reported, cross-matched, and reunited with their rightful owners. Driven by Google Gemini 1.5 Flash multimodal vision and intelligent pattern matching, FindConnect AI eliminates manual form friction and predicts item matches with high precision.
+
+---
 
 ## 🌟 Live Demo
 
-**Live URL**: [FindConnect](https://findconnect-45273.web.app/)
+- **Live Platform**: [FindConnect AI](https://findconnect-45273.web.app/)
+- **Backend API**: [FindConnect Server](https://find-connect-server.vercel.app/)
 
-## 🎯 Purpose
+---
 
-FindConnect creates a community-driven platform where users can report lost items and help others recover their lost belongings. By sharing details and photos of lost and found items, the community can work together to reunite lost treasures with their rightful owners.
+## 💡 Project Overview & Purpose
 
-## ✨ Key Features
+Traditional lost and found systems rely on manual listing, vague descriptions, and passive browsing. **FindConnect AI** transforms this process into an **intelligent, automated recovery network**:
+- **Instant AI Vision Recognition**: Upload an item image or link, and Gemini AI automatically extracts visual features, title, detailed description, and precise category classification in seconds.
+- **AI Smart Match Engine**: Cross-analyzes lost item reports against community found submissions, scoring match compatibility and highlighting potential recoveries.
+- **Interactive Geo-Spatial Map**: Visualizes lost (Red 🔍) and found (Emerald 🎁) items across cities on an interactive Leaflet map interface.
+- **Community-Driven Trust**: Secure claim verification, community interaction, and real-time status tracking.
 
-### 🔐 Authentication & User Management
-- **Firebase Authentication**: Secure user registration and login
-- **User Profiles**: Personalized user experience with profile management
-- **Theme Support**: Light and dark theme with automatic preference detection
+---
 
-### 📱 Item Management
-- **Report Lost Items**: Comprehensive form with image upload, location tracking, and detailed descriptions
-- **🤖 AI-Powered Auto-Fill**: Upload an item image or link and let Google Gemini AI analyze it to automatically fill in title, description, and category
-- **Post Found Items**: Help others by posting found items with full details
-- **Advanced Search**: Real-time search across titles, descriptions, locations, and categories
-- **Smart Filtering**: Filter by category, status, and date
-- **Sorting Options**: Sort by date, title, or location (ascending/descending)
+## 🤖 Core AI Capabilities
 
-### 🎨 Interactive Features
-- **Like & Share**: Like items and share them with the community
-- **View Tracking**: Track which items you've viewed
-- **Status Badges**: Color-coded status indicators (Lost, Found, Returned)
-- **Real-time Updates**: Live updates for item status changes
+### 🧠 1. Multimodal AI Auto-Fill (Google Gemini 1.5 Flash)
+- **Zero-Friction Item Posting**: Users upload a photo or image URL, and Gemini AI analyzes color, brand, object type, and condition.
+- **Automated Metadata Extraction**: Generates concise titles, rich descriptive text, and auto-selects categories (Electronics, Documents, Jewelry, Accessories, Pets, etc.).
 
-### 📊 Dashboard & Analytics
-- **My Items**: Manage your posted items with edit and delete capabilities
-- **Recovered Items**: Track successfully recovered items
-- **Item Statistics**: View recovery rates and community statistics
+### 🔍 2. AI Smart Match Finder
+- **Automated Similarity Scoring**: Evaluates items based on multimodal feature vectors, location proximity, category overlap, and date timestamps.
+- **Match Confidence Rating**: Presents potential item matches with visual compatibility percentages (e.g., 95% Match Confidence) directly on item detail pages.
 
-### 🎨 Modern UI/UX
-- **Responsive Design**: Works perfectly on desktop, tablet, and mobile
-- **Smooth Animations**: Framer Motion animations for enhanced user experience
-- **Interactive Cards**: Hover effects and micro-interactions
-- **Loading States**: Beautiful loading animations and skeleton screens
+---
+
+## ✨ Key Platform Features
+
+### 📍 Interactive Geo-Spatial Map View
+- **Leaflet & OpenStreetMap Integration**: Seamless toggle between Grid View and interactive Map View on `/allItems`.
+- **Custom Visual Markers**: Distinct lost vs. found pin badges with location jittering for privacy and clarity.
+- **Rich Preview Cards**: Interactive map popups with item thumbnails, metadata, and quick navigation.
+
+### 🔐 Secure Authentication & User Control
+- **Firebase Auth**: Secure email/password and social authentication.
+- **My Items Dashboard**: Comprehensive management of user-reported items (Edit, Delete, Recover).
+- **All Recovered Items Tracker**: Community showcase celebrating successful item reunions.
+
+### 🎨 Modern Glassmorphic UI/UX System
+- **Balanced Light & Dark Mode**: Dynamic theme switcher powered by `ThemeContext` and Tailwind CSS `class` strategy.
+- **Framer Motion Micro-Animations**: Smooth card entrances, page transitions, and interactive hover states.
+- **Fully Responsive**: Mobile-first fluid layout across desktop, tablet, and smartphone screens.
+
+---
 
 ## 🛠️ Technology Stack
 
-### Frontend
-- **React 18**: Modern React with hooks and functional components
-- **Vite**: Fast build tool and development server
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development
-- **DaisyUI**: Component library built on top of Tailwind CSS
-- **Framer Motion**: Production-ready motion library for React
-- **Lucide React**: Beautiful & consistent icon toolkit
+### 🚀 Frontend Architecture
+- **React 18**: Modular functional components & custom hooks
+- **Vite**: Ultra-fast build pipeline & dev server
+- **Tailwind CSS & DaisyUI**: Custom design system tokens, glassmorphic utilities, and dark mode controls
+- **Framer Motion**: Production-ready micro-animations & layout transitions
+- **Leaflet & OpenStreetMap**: Interactive geo-spatial mapping
+- **Lucide React**: Modern iconography
 
-### 🤖 AI Integration
-- **Google Gemini AI**: Multimodal AI for image analysis and automatic item detail extraction
+### 🧠 AI & Cloud Infrastructure
+- **Google Gemini 1.5 Flash API**: Multimodal vision analysis & match scoring
+- **Firebase Authentication**: Secure identity management
+- **Firebase Hosting**: Global CDN deployment
 
-### Authentication & Hosting
-- **Firebase Authentication**: Secure user authentication
-- **Firebase Hosting**: Fast and secure web hosting
-- **Firebase CLI**: Command-line tools for deployment
+### ⚙️ Backend API Services
+- **Node.js & Express.js**: RESTful server architecture
+- **MongoDB Atlas**: Cloud NoSQL database with indexing
+- **JSON Web Tokens (JWT)**: Secure HttpOnly cookie session management
+- **Vercel Serverless**: Cloud backend deployment
 
-### Additional Libraries
-- **React Router DOM**: Client-side routing
-- **React DatePicker**: Date selection component
-- **SweetAlert2**: Beautiful alert dialogs
-- **React Icons**: Icon library
-- **Axios**: HTTP client for API calls
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Firebase account
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/FindConnect.git
-   cd FindConnect
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Firebase**
-   - Create a Firebase project
-   - Enable Authentication and Hosting
-   - Update Firebase configuration in `src/firebase/firebase.init.js`
-
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Build for production**
-   ```bash
-   npm run build
-   ```
-
-6. **Deploy to Firebase**
-   ```bash
-   firebase deploy
-   ```
+---
 
 ## 📁 Project Structure
 
 ```
 FindConnect/
 ├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── Navbar.jsx      # Navigation component
-│   │   └── Footer.jsx      # Footer component
-│   ├── context/            # React context providers
-│   │   └── Authcontext/    # Authentication context
-│   ├── firebase/           # Firebase configuration
-│   ├── hooks/              # Custom React hooks
-│   ├── layouts/            # Layout components
-│   ├── pages/              # Page components
-│   │   ├── Auth/           # Authentication pages
-│   │   ├── Home/           # Home page components
-│   │   └── Items/          # Item management pages
-│   └── router/             # Routing configuration
-├── public/                 # Static assets
-├── dist/                   # Production build
-├── firebase.json           # Firebase configuration
-├── .firebaserc            # Firebase project settings
-└── package.json            # Dependencies and scripts
+│   ├── components/          # AI Smart Matches, Leaflet Map View, Header, Footer
+│   │   ├── AiSmartMatches.jsx
+│   │   └── ItemsMapView.jsx
+│   ├── context/            # ThemeContext & AuthContext
+│   ├── firebase/           # Firebase SDK initialization
+│   ├── layouts/            # Main Layout shell
+│   ├── pages/              # Pages: Home, AllItems, ItemDetails, AddItem, Dashboard
+│   └── router/             # React Router configuration with fallback loaders
+├── public/                 # Static assets & icons
+├── DESIGN_SYSTEM.md        # UI/UX design tokens & guidelines
+├── package.json            # Dependencies & build scripts
+└── vite.config.js          # Vite build options
 ```
 
-## 🎨 Features in Detail
+---
 
-### 🤖 AI-Powered Image Auto-Fill
-- **Multimodal Image Recognition**: Analyzes uploaded item photos or image URLs using Google Gemini AI
-- **Smart Form Completion**: Auto-populates title, detailed description, and appropriate category based on visual content
-- **Fast & Effortless Reporting**: Streamlines item creation for users while ensuring higher quality listings
+## 🔑 Environment Variables Setup
 
-### 🔍 Advanced Search & Filtering
-- **Real-time Search**: Instant search results as you type
-- **Multi-field Search**: Search across titles, descriptions, locations, and categories
-- **Smart Filtering**: Filter by item status, category, and date range
-- **Sorting Options**: Sort by date, title, or location with ascending/descending order
+Create a `.env` file in the project root:
 
-### 📱 Responsive Design
-- **Mobile-First**: Optimized for mobile devices
-- **Tablet Support**: Perfect layout on tablets
-- **Desktop Experience**: Enhanced features on larger screens
-- **Touch-Friendly**: Optimized touch targets for mobile
-
-### 🌙 Theme System
-- **Light Theme**: Clean, professional light mode
-- **Dark Theme**: Easy on the eyes dark mode
-- **Auto-Detection**: Automatically detects user's system preference
-- **Persistent**: Remembers user's theme choice
-
-### 🎭 Interactive Components
-- **Animated Cards**: Smooth hover animations and transitions
-- **Loading States**: Beautiful loading animations
-- **Empty States**: Helpful messages when no data is available
-- **Success Feedback**: Clear feedback for user actions
-
-## 🔧 Backend Integration
-
-FindConnect's backend is built using **Node.js, Express.js, and MongoDB**. It handles authentication, item management, and user interactions securely.
-
-### Backend Features
-- **JWT Authentication**: Secure user sessions with cookie-based tokens
-- **RESTful APIs**: Clean API design for all operations
-- **MongoDB Integration**: Efficient data storage and retrieval using MongoDB Atlas
-- **CORS Support**: Cross-origin resource sharing enabled for multiple origins
-- **Cookie Parser**: Secure cookie-based authentication
-- **Error Handling**: Comprehensive error handling and validation
-- **Environment Variables**: Secure configuration management
-
-**Backend Repository**: [FindConnect-Server](https://github.com/AyshaUrmi0/FindConnect-Server)
-
-### Backend Technology Stack
-- **Node.js**: JavaScript runtime environment
-- **Express.js**: Web application framework
-- **MongoDB Atlas**: Cloud-based NoSQL database
-- **JWT**: JSON Web Tokens for authentication
-- **CORS**: Cross-Origin Resource Sharing middleware
-- **Cookie Parser**: Cookie parsing middleware
-- **Body Parser**: Request body parsing
-- **Vercel**: Serverless deployment platform
-
-## 📊 API Endpoints
-
-### Authentication
-- `POST /jwt` - Generate JWT token for user authentication
-- `POST /logout` - Clear authentication token
-
-### Items Management
-- `GET /items` - Get latest 6 items (sorted by date)
-- `GET /allItems` - Get all items
-- `GET /items/:id` - Get specific item by ID
-- `POST /addedItems` - Add new item (inserts into both collections)
-- `PUT /addedItems/:id` - Update item
-- `DELETE /addedItems/:id` - Delete item
-- `GET /addedItems` - Get user's added items (requires authentication)
-- `GET /addedItems/:id` - Get specific added item by ID
-
-### Recovery Management
-- `POST /recoveredItems` - Mark item as recovered
-- `GET /recoveredItems` - Get recovered items by user email
-- `PUT /recoveredItems/:id` - Update item status to recovered
-- `PATCH /status/:id` - Update item status to recovered
-
-### Database Collections
-- **Items**: Main collection for all lost/found items
-- **addedItems**: Collection for user-added items
-- **allRecoveredItems**: Collection for recovered items
-
-### Security Features
-- **JWT Token Verification**: Middleware for protected routes
-- **Cookie-based Authentication**: Secure token storage
-- **CORS Configuration**: Multiple allowed origins
-- **Environment Variables**: Secure credential management
-
-## 🚀 Deployment
-
-### Frontend Deployment (Firebase Hosting)
-1. Install Firebase CLI: `npm install -g firebase-tools`
-2. Login to Firebase: `firebase login`
-3. Build the project: `npm run build`
-4. Deploy: `firebase deploy`
-
-### Backend Deployment (Vercel)
-The backend is deployed on Vercel for serverless hosting:
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Deploy automatically on push to main branch
-
-### Environment Variables
-
-#### Frontend (.env)
 ```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
-VITE_GEMINI_API_KEY=your_gemini_api_key
+VITE_GEMINI_API_KEY=your_google_gemini_api_key
 ```
 
-#### Backend (Vercel Environment Variables)
-```env
-DB_USER=your_mongodb_username
-DB_PASS=your_mongodb_password
-JWT_SECRET=your_jwt_secret_key
-NODE_ENV=production
-PORT=3000
-```
+---
 
-## 🤝 Contributing
+## 💻 Local Development Setup
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -am 'Add feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/AyshaUrmi0/FindConnect.git
+   cd FindConnect
+   ```
 
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-## 👥 Done By
+3. **Run the local development server**
+   ```bash
+   pnpm dev
+   ```
 
-- **Aysha Ismail** - Full Stack Developer
-- **GitHub**: [AyshaUrmi0](https://github.com/AyshaUrmi0)
+4. **Build for production**
+   ```bash
+   pnpm run build
+   ```
 
-## 🙏 Acknowledgments
+---
 
-- Firebase for authentication and hosting
-- Tailwind CSS for the amazing utility-first framework
-- DaisyUI for beautiful components
-- Framer Motion for smooth animations
-- Lucide for consistent icons
+## 👥 Author
 
+- **Aysha Ismail** - Full Stack & AI Developer
+- **GitHub**: [@AyshaUrmi0](https://github.com/AyshaUrmi0)
 
+---
 
+## 📄 License
 
+This project is open-source and available under the [MIT License](LICENSE).
