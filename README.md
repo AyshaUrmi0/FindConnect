@@ -19,6 +19,7 @@ FindConnect creates a community-driven platform where users can report lost item
 
 ### 📱 Item Management
 - **Report Lost Items**: Comprehensive form with image upload, location tracking, and detailed descriptions
+- **🤖 AI-Powered Auto-Fill**: Upload an item image or link and let Google Gemini AI analyze it to automatically fill in title, description, and category
 - **Post Found Items**: Help others by posting found items with full details
 - **Advanced Search**: Real-time search across titles, descriptions, locations, and categories
 - **Smart Filtering**: Filter by category, status, and date
@@ -50,6 +51,9 @@ FindConnect creates a community-driven platform where users can report lost item
 - **DaisyUI**: Component library built on top of Tailwind CSS
 - **Framer Motion**: Production-ready motion library for React
 - **Lucide React**: Beautiful & consistent icon toolkit
+
+### 🤖 AI Integration
+- **Google Gemini AI**: Multimodal AI for image analysis and automatic item detail extraction
 
 ### Authentication & Hosting
 - **Firebase Authentication**: Secure user authentication
@@ -129,6 +133,11 @@ FindConnect/
 ```
 
 ## 🎨 Features in Detail
+
+### 🤖 AI-Powered Image Auto-Fill
+- **Multimodal Image Recognition**: Analyzes uploaded item photos or image URLs using Google Gemini AI
+- **Smart Form Completion**: Auto-populates title, detailed description, and appropriate category based on visual content
+- **Fast & Effortless Reporting**: Streamlines item creation for users while ensuring higher quality listings
 
 ### 🔍 Advanced Search & Filtering
 - **Real-time Search**: Instant search results as you type
@@ -236,6 +245,7 @@ VITE_FIREBASE_PROJECT_ID=your_project_id
 VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
+VITE_GEMINI_API_KEY=your_gemini_api_key
 ```
 
 #### Backend (Vercel Environment Variables)
