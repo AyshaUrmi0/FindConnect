@@ -32,7 +32,7 @@ const AllItems = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://find-connect-server.vercel.app/allItems?page=${currentPage}&limit=10`)
+    fetch(`https://find-connect-server.vercel.app/allItems`)
       .then((res) => res.json())
       .then((data) => {
         const itemsData = Array.isArray(data) ? data : (data.items || []);
