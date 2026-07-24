@@ -32,3 +32,6 @@ coverage
 
 # Misc
 config.bat
+
+# Local scripts (not for version control)
+seed-data.mjs
