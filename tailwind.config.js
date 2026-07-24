@@ -1,18 +1,18 @@
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
+import daisyui from 'daisyui'
 
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {},
   },
-  plugins: [
-    require('daisyui'),
-  ],
-};
+  plugins: [daisyui],
+  daisyui: {
+    themes: ['light', 'dark'],
+    logs: false,
+  },
+}
