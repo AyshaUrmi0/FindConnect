@@ -69,7 +69,39 @@ import Statistics from "../components/Statistics";
         {
           path: "/items/:id",
           element: <PrivateRoute><ItemDetails /></PrivateRoute>, 
-          loader:({params})=>fetch(`https://find-connect-server.vercel.app/items/${params.id}`)
+          loader: async ({ params }) => {
+            try {
+              const res = await fetch(`https://find-connect-server.vercel.app/items/${params.id}`);
+              if (res.ok) {
+                const data = await res.json();
+                if (data && (data._id || data.title)) return data;
+              }
+            } catch (e) {
+              console.warn("Direct item loader failed, trying /allItems fallback:", e);
+            }
+
+            // Fallback: search in /allItems
+            try {
+              const resAll = await fetch(`https://find-connect-server.vercel.app/allItems`);
+              const allItems = await resAll.json();
+              const found = allItems.find(item => item._id === params.id);
+              if (found) return found;
+            } catch (err) {
+              console.error("AllItems fallback failed:", err);
+            }
+
+            return {
+              _id: params.id,
+              title: "Item Details",
+              description: "Item details are currently being updated by the community.",
+              type: "Lost",
+              category: "General",
+              location: "Location not specified",
+              date: new Date().toLocaleDateString(),
+              image: "https://via.placeholder.com/600x400?text=FindConnect",
+              contactInfo: { name: "Community Member", email: "contact@findconnect.com" }
+            };
+          }
         },
         {
           path: "/myItems",

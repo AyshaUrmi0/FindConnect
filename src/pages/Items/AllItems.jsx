@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Calendar, ArrowRight, Loader2, Filter, SortAsc, SortDesc, X, Eye, Heart, Share2, Tag, Clock, User } from 'lucide-react';
+import { Search, MapPin, Calendar, ArrowRight, Loader2, Filter, SortAsc, SortDesc, X, Eye, Heart, Share2, Tag, Clock, User, LayoutGrid, Map } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeContext } from '../../context/Authcontext/ThemeContext';
+import ItemsMapView from '../../components/ItemsMapView';
 
 const AllItems = () => {
   const { theme } = useContext(ThemeContext);
@@ -11,6 +12,7 @@ const AllItems = () => {
   const [filteredItems, setFilteredItems] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
   const [sortBy, setSortBy] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -198,60 +200,91 @@ const AllItems = () => {
         </div>
 
         {/* Filter Controls */}
-        <div className="flex flex-wrap items-center gap-4">
-          <motion.button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-              theme === 'dark' 
-                ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' 
-                : 'bg-white border-gray-300 hover:bg-gray-50'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Filter className="w-4 h-4" />
-            Filters
-          </motion.button>
-
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className={`px-4 py-2 rounded-lg border ${
-              theme === 'dark' 
-                ? 'bg-gray-800 border-gray-700 text-white' 
-                : 'bg-white border-gray-300 text-gray-900'
-            }`}
-          >
-            <option value="date">Date</option>
-            <option value="title">Title</option>
-            <option value="location">Location</option>
-          </select>
-
-          <motion.button
-            onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-              theme === 'dark' 
-                ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' 
-                : 'bg-white border-gray-300 hover:bg-gray-50'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
-            {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
-          </motion.button>
-
-          {(searchQuery || selectedCategory !== 'all' || selectedStatus !== 'all') && (
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             <motion.button
-              onClick={clearFilters}
-              className="flex items-center gap-2 px-4 py-2 text-red-600 border border-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+              onClick={() => setShowFilters(!showFilters)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                theme === 'dark' 
+                  ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' 
+                  : 'bg-white border-gray-300 hover:bg-gray-50'
+              }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <X className="w-4 h-4" />
-              Clear
+              <Filter className="w-4 h-4" />
+              Filters
             </motion.button>
-          )}
+
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className={`px-4 py-2 rounded-lg border ${
+                theme === 'dark' 
+                  ? 'bg-gray-800 border-gray-700 text-white' 
+                  : 'bg-white border-gray-300 text-gray-900'
+              }`}
+            >
+              <option value="date">Date</option>
+              <option value="title">Title</option>
+              <option value="location">Location</option>
+            </select>
+
+            <motion.button
+              onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                theme === 'dark' 
+                  ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' 
+                  : 'bg-white border-gray-300 hover:bg-gray-50'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
+              {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+            </motion.button>
+
+            {(searchQuery || selectedCategory !== 'all' || selectedStatus !== 'all') && (
+              <motion.button
+                onClick={clearFilters}
+                className="flex items-center gap-2 px-4 py-2 text-red-600 border border-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <X className="w-4 h-4" />
+                Clear
+              </motion.button>
+            )}
+          </div>
+
+          {/* View Toggle (Grid vs Map) */}
+          <div className="flex items-center p-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl">
+            <button
+              type="button"
+              onClick={() => setViewMode('grid')}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-white dark:bg-purple-600 text-purple-700 dark:text-white shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-purple-600'
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              <span>Grid View</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setViewMode('map')}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                viewMode === 'map'
+                  ? 'bg-white dark:bg-purple-600 text-purple-700 dark:text-white shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-purple-600'
+              }`}
+            >
+              <Map className="w-3.5 h-3.5" />
+              <span>Map View</span>
+            </button>
+          </div>
         </div>
 
         {/* Advanced Filters */}
@@ -307,7 +340,7 @@ const AllItems = () => {
         </AnimatePresence>
       </div>
 
-      {/* Items Grid */}
+      {/* Items Display (Grid vs Map) */}
       <AnimatePresence mode="wait">
         {filteredItems.length === 0 ? (
           <motion.div
@@ -321,6 +354,16 @@ const AllItems = () => {
             <p className={`text-gray-500 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
               Try adjusting your search criteria or filters
             </p>
+          </motion.div>
+        ) : viewMode === 'map' ? (
+          <motion.div
+            key="items-map"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ItemsMapView items={filteredItems} />
           </motion.div>
         ) : (
           <motion.div
