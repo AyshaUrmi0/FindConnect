@@ -7,7 +7,9 @@
 ## 🌟 Live Demo
 
 - **Live Platform**: [FindConnect AI](https://findconnect-45273.web.app/)
-- **Backend API**: [FindConnect Server](https://find-connect-server.vercel.app/)
+- **Frontend Repository**: [FindConnect Client Repo](https://github.com/AyshaUrmi0/FindConnect)
+- **Backend Repository**: [FindConnect Server Repo](https://github.com/AyshaUrmi0/FindConnect-Server)
+- **Live Backend API**: [FindConnect Server API](https://find-connect-server.vercel.app/)
 
 ---
 
