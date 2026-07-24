@@ -19,8 +19,11 @@ import {
   AlertCircle,
   CheckCircle,
   ArrowLeft,
-  Plus
+  Plus,
+  Sparkles,
+  Wand2
 } from 'lucide-react';
+
 import axios from 'axios';
 
 const AddItem = () => {
@@ -38,6 +41,8 @@ const AddItem = () => {
   const [contactEmail, setContactEmail] = useState(user?.email || '');
   const [contactPhone, setContactPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [base64Image, setBase64Image] = useState('');
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
@@ -45,6 +50,165 @@ const AddItem = () => {
     'Electronics', 'Accessories', 'Personal Items', 'Pets', 'Bags', 
     'Documents', 'Clothing', 'Books', 'Sports', 'Jewelry', 'Other'
   ];
+
+  const handleFileUpload = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      setFile(result); // Use Data URL as preview/image string
+      setBase64Image(result.split(',')[1]);
+      setErrors(prev => ({ ...prev, file: null }));
+    };
+    reader.readAsDataURL(selectedFile);
+  };
+
+  const handleAiAutoFill = async () => {
+    if (!file) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Image Required',
+        text: 'Please upload an image or enter an Image URL first so the AI can analyze it!',
+        confirmButtonColor: '#8b5cf6',
+      });
+      return;
+    }
+
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Gemini API Key Required',
+        html: `
+          <div class="text-left space-y-2">
+            <p>To use <strong>AI Auto-Fill</strong>, add your free Gemini API key to your <code>.env</code> file:</p>
+            <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded text-xs text-purple-600">VITE_GEMINI_API_KEY=your_gemini_api_key</pre>
+            <p class="text-xs text-gray-500">You can get a free API key in 30 seconds at <a href="https://aistudio.google.com" target="_blank" class="text-purple-600 underline font-semibold">aistudio.google.com</a></p>
+          </div>
+        `,
+        confirmButtonColor: '#8b5cf6',
+      });
+      return;
+    }
+
+    setIsAiLoading(true);
+
+    try {
+      let imagePayloadData = base64Image;
+      let mimeType = 'image/jpeg';
+
+      if (!imagePayloadData) {
+        // If image is a remote URL, fetch and convert to base64
+        try {
+          const response = await fetch(file);
+          const blob = await response.blob();
+          mimeType = blob.type || 'image/jpeg';
+          
+          imagePayloadData = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        } catch (fetchErr) {
+          throw new Error('Remote image could not be fetched due to CORS. Try uploading a local file instead!');
+        }
+      }
+
+      const promptText = `Analyze this image of a lost or found item. Return ONLY a raw JSON object (without markdown fences or code blocks) with exact keys:
+"title": a concise 3-6 word title,
+"category": choose EXACTLY one from [${categories.join(', ')}],
+"description": a clear 2-3 sentence detailed description of visual features, color, brand, condition, and key identifiers.`;
+
+      // Try multiple model aliases in case a specific model string is deprecated or restricted
+      const modelsToTry = [
+        "gemini-flash-latest",
+        "gemini-2.5-flash-lite",
+        "gemini-2.0-flash-lite",
+        "gemini-1.5-flash-latest"
+      ];
+
+
+      let data = null;
+      let lastErrorMessage = '';
+
+      for (const modelName of modelsToTry) {
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{
+                parts: [
+                  { text: promptText },
+                  {
+                    inline_data: {
+                      mime_type: mimeType,
+                      data: imagePayloadData
+                    }
+                  }
+                ]
+              }]
+            })
+          });
+
+          const jsonRes = await res.json();
+          if (!jsonRes.error && jsonRes?.candidates?.[0]?.content?.parts?.[0]?.text) {
+            data = jsonRes;
+            break; // Successfully got a response from this model!
+          } else {
+            lastErrorMessage = jsonRes.error?.message || 'Model error';
+          }
+        } catch (fetchError) {
+          lastErrorMessage = fetchError.message;
+        }
+      }
+
+      if (!data) {
+        throw new Error(lastErrorMessage || 'Gemini API request failed on available models.');
+      }
+
+
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawText) throw new Error('No analysis text returned from Gemini API');
+
+      const cleanedJsonText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+      const parsed = JSON.parse(cleanedJsonText);
+
+      if (parsed.title) {
+        setTitle(parsed.title);
+        setErrors(prev => ({ ...prev, title: null }));
+      }
+      if (parsed.category && categories.includes(parsed.category)) {
+        setCategory(parsed.category);
+        setErrors(prev => ({ ...prev, category: null }));
+      }
+      if (parsed.description) {
+        setDescription(parsed.description);
+        setErrors(prev => ({ ...prev, description: null }));
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: '✨ AI Auto-Fill Complete!',
+        text: 'Title, Category, and Description have been generated by Gemini AI.',
+        confirmButtonColor: '#8b5cf6',
+      });
+    } catch (err) {
+      console.error('AI Auto-Fill Error:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'AI Analysis Failed',
+        text: err.message || 'Failed to analyze image with AI.',
+        confirmButtonColor: '#8b5cf6',
+      });
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -319,46 +483,102 @@ const AddItem = () => {
                 )}
               </div>
             </div>
-
-                         {/* Image Upload */}
-             <div>
-               <label className={`block mb-2 text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                 <Camera className="inline w-4 h-4 mr-2" />
-                 Image URL *
-               </label>
-               <div className="relative">
-                 <input
-                   type="url"
-                   onChange={(e) => validateImageUrl(e.target.value)}
-                   onBlur={() => handleFieldBlur('file')}
-                   placeholder="Enter image URL (e.g., https://example.com/image.jpg)"
-                   className={`w-full p-3 pr-12 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
-                     theme === 'dark' 
-                       ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
-                       : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                   } ${getFieldError('file') ? 'border-red-500 focus:ring-red-500' : ''}`}
-                   required
-                 />
-                 <Upload className="absolute right-3 top-1/2 w-5 h-5 -translate-y-1/2 text-gray-400" />
+             {/* Image Upload & AI Auto-Fill */}
+             <div className="p-5 rounded-xl border border-purple-500/30 bg-purple-500/5">
+               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                 <label className={`block text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                   <Camera className="inline w-4 h-4 mr-2 text-purple-500" />
+                   Item Photo *
+                 </label>
+                 
+                 <motion.button
+                   type="button"
+                   onClick={handleAiAutoFill}
+                   disabled={isAiLoading || !file}
+                   whileHover={{ scale: 1.03 }}
+                   whileTap={{ scale: 0.97 }}
+                   className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 rounded-lg shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                 >
+                   {isAiLoading ? (
+                     <>
+                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                       Analyzing with AI...
+                     </>
+                   ) : (
+                     <>
+                       <Sparkles className="w-4 h-4 animate-pulse text-yellow-300" />
+                       Auto-Fill Details with AI ✨
+                     </>
+                   )}
+                 </motion.button>
                </div>
+
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 <div>
+                   <label className={`block text-xs mb-1 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                     Option A: Upload Local Image File
+                   </label>
+                   <input
+                     type="file"
+                     accept="image/*"
+                     onChange={handleFileUpload}
+                     className={`w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 ${
+                       theme === 'dark' ? 'file:bg-gray-700 file:text-purple-300' : ''
+                     }`}
+                   />
+                 </div>
+
+                 <div>
+                   <label className={`block text-xs mb-1 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                     Option B: Enter Web Image URL
+                   </label>
+                   <div className="relative">
+                     <input
+                       type="url"
+                       onChange={(e) => {
+                         validateImageUrl(e.target.value);
+                         setBase64Image('');
+                       }}
+                       onBlur={() => handleFieldBlur('file')}
+                       placeholder="https://example.com/image.jpg"
+                       className={`w-full p-2 pr-10 text-sm border rounded-lg focus:ring-2 focus:ring-purple-500 ${
+                         theme === 'dark' 
+                           ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                           : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                       } ${getFieldError('file') ? 'border-red-500 focus:ring-red-500' : ''}`}
+                     />
+                     <Upload className="absolute right-3 top-1/2 w-4 h-4 -translate-y-1/2 text-gray-400" />
+                   </div>
+                 </div>
+               </div>
+
                {getFieldError('file') && (
-                 <p className="mt-1 text-sm text-red-500">{errors.file}</p>
+                 <p className="mt-2 text-sm text-red-500">{errors.file}</p>
                )}
+
                {file && (
                  <motion.div
-                   initial={{ opacity: 0, height: 0 }}
-                   animate={{ opacity: 1, height: 'auto' }}
-                   className="mt-3"
+                   initial={{ opacity: 0, scale: 0.9 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   className="mt-4 flex items-center gap-4 p-2 rounded-lg bg-gray-100 dark:bg-gray-700/50"
                  >
                    <img 
                      src={file} 
                      alt="Preview" 
-                     className="w-32 h-32 object-cover rounded-lg border"
+                     className="w-24 h-24 object-cover rounded-lg border border-purple-300 shadow-sm"
                      onError={() => setFile('')}
                    />
+                   <div>
+                     <p className="text-xs font-semibold text-purple-600 dark:text-purple-400 flex items-center gap-1">
+                       <Sparkles className="w-3 h-3" /> Image Ready for AI Analysis
+                     </p>
+                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                       Click "Auto-Fill Details with AI ✨" above to automatically generate item Title, Category, and Description!
+                     </p>
+                   </div>
                  </motion.div>
                )}
-             </div>
+              </div>
 
                          {/* Description */}
              <div>
