@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Calendar, ArrowRight, Loader2, Filter, SortAsc, SortDesc, X, Eye, Heart, Share2, Tag, Clock, User, LayoutGrid, Map } from 'lucide-react';
+import { Search, MapPin, Calendar, ArrowRight, Loader2, Filter, SortAsc, SortDesc, X, Eye, Heart, Share2, Tag, Clock, User, LayoutGrid, Map, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeContext } from '../../context/Authcontext/ThemeContext';
 import ItemsMapView from '../../components/ItemsMapView';
@@ -20,6 +20,10 @@ const AllItems = () => {
   const [likedItems, setLikedItems] = useState(new Set());
   const [viewedItems, setViewedItems] = useState(new Set());
 
+  // Pagination states (10 items per page)
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const categories = [
     'Electronics', 'Accessories', 'Personal Items', 'Pets', 'Bags', 'Documents', 'Clothing', 'Books', 'Sports', 'Other'
   ];
@@ -28,12 +32,12 @@ const AllItems = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://find-connect-server.vercel.app/allItems")
+    fetch(`https://find-connect-server.vercel.app/allItems?page=${currentPage}&limit=10`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setItems(data); 
-        setFilteredItems(data); 
+        const itemsData = Array.isArray(data) ? data : (data.items || []);
+        setItems(itemsData); 
+        setFilteredItems(itemsData); 
         setLoading(false);
       })
       .catch((err) => {
@@ -44,6 +48,7 @@ const AllItems = () => {
 
   useEffect(() => {
     applyFilters();
+    setCurrentPage(1); // Reset to page 1 on filter/search change
   }, [searchQuery, sortBy, sortOrder, selectedCategory, selectedStatus, items]);
 
   const applyFilters = () => {
@@ -153,6 +158,12 @@ const AllItems = () => {
     return `${Math.floor(diffInHours / 168)}w ago`;
   };
 
+  // Pagination calculation
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / itemsPerPage));
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -177,7 +188,7 @@ const AllItems = () => {
           Every lost item has a story to tell. Whether it's a child's favorite toy, a family photo album, or a vital piece of identification, every item has sentimental value and deserves to be back in the hands of the person who needs it most.
         </p>
         <div className="mt-4 text-sm text-gray-500">
-          {filteredItems.length} items found
+          Showing {filteredItems.length > 0 ? `${indexOfFirstItem + 1}-${Math.min(indexOfLastItem, filteredItems.length)} of ` : ''}{filteredItems.length} items found
         </div>
       </motion.div>
 
@@ -372,12 +383,12 @@ const AllItems = () => {
             animate={{ opacity: 1 }}
             className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
-            {filteredItems.map((item, index) => (
+            {currentItems.map((item, index) => (
               <motion.div
                 key={item._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 className={`overflow-hidden transition-all duration-300 shadow-lg group rounded-xl hover:-translate-y-2 ${
                   theme === 'dark' ? 'bg-gray-800' : 'bg-white'
                 }`}
@@ -477,6 +488,48 @@ const AllItems = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Pagination Bar */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            Page {currentPage} of {totalPages}
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors disabled:opacity-40 disabled:cursor-not-allowed border-gray-300 dark:border-gray-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-purple-600 dark:text-purple-300"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`w-8 h-8 rounded-lg text-sm font-bold transition-all ${
+                  currentPage === page
+                    ? 'bg-purple-600 text-white shadow-md'
+                    : 'border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/30'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors disabled:opacity-40 disabled:cursor-not-allowed border-gray-300 dark:border-gray-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-purple-600 dark:text-purple-300"
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

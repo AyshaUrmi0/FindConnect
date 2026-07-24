@@ -20,7 +20,9 @@ import {
   Filter,
   SortAsc,
   SortDesc,
-  Loader2
+  Loader2,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 const AllRecoveredItems = () => {
@@ -35,13 +37,20 @@ const AllRecoveredItems = () => {
   const [sortOrder, setSortOrder] = useState('desc');
   const [showFilters, setShowFilters] = useState(false);
 
+  // Pagination states (10 items per page)
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://find-connect-server.vercel.app/recoveredItems`)
+      setLoading(true);
+      fetch(`https://find-connect-server.vercel.app/recoveredItems?page=${currentPage}&limit=10`)
         .then((res) => res.json())
         .then((data) => {
-          setRecoveredItems(data);
-          setFilteredItems(data);
+          // Handle both array response and paginated object response { items, total }
+          const itemsData = Array.isArray(data) ? data : (data.items || []);
+          setRecoveredItems(itemsData);
+          setFilteredItems(itemsData);
           setLoading(false);
         })
         .catch((err) => {
@@ -53,6 +62,7 @@ const AllRecoveredItems = () => {
 
   useEffect(() => {
     applyFilters();
+    setCurrentPage(1); // Reset to first page when search/filter/sort changes
   }, [searchQuery, sortBy, sortOrder, recoveredItems]);
 
   const applyFilters = () => {
@@ -128,13 +138,11 @@ const AllRecoveredItems = () => {
     return `${Math.floor(diffInHours / 168)}w ago`;
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px] pt-20">
-        <Loader2 className="w-12 h-12 text-purple-600 animate-spin" />
-      </div>
-    );
-  }
+  // Pagination calculation
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / itemsPerPage));
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className={`min-h-screen pt-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -165,7 +173,7 @@ const AllRecoveredItems = () => {
             Successfully reunited items with their owners
           </p>
           <div className="mt-4 text-sm text-gray-500">
-            {filteredItems.length} items recovered
+            Showing {filteredItems.length > 0 ? `${indexOfFirstItem + 1}-${Math.min(indexOfLastItem, filteredItems.length)} of ` : ''}{filteredItems.length} items recovered
           </div>
         </motion.div>
 
@@ -194,63 +202,59 @@ const AllRecoveredItems = () => {
             />
           </div>
 
-                     {/* Controls */}
-           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                             <motion.button
-                 onClick={() => setShowFilters(!showFilters)}
-                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
-                   theme === 'dark' 
-                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
-                     : 'bg-white border-gray-300 hover:bg-gray-50'
-                 }`}
-                 whileHover={{ scale: 1.05 }}
-                 whileTap={{ scale: 0.95 }}
-               >
-                 <Filter className="w-4 h-4" />
-                 <span className="hidden sm:inline">Filters</span>
-               </motion.button>
+          {/* Controls */}
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <motion.button
+                onClick={() => setShowFilters(!showFilters)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
+                  theme === 'dark' 
+                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
+                    : 'bg-white border-gray-300 hover:bg-gray-50'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Filter className="w-4 h-4" />
+                <span className="hidden sm:inline">Filters</span>
+              </motion.button>
 
-               <select
-                 value={sortBy}
-                 onChange={(e) => setSortBy(e.target.value)}
-                 className={`px-3 py-2 rounded-lg border ${
-                   theme === 'dark' 
-                     ? 'bg-gray-700 border-gray-600 text-white' 
-                     : 'bg-white border-gray-300 text-gray-900'
-                 }`}
-               >
-                 <option value="date">Date</option>
-                 <option value="title">Title</option>
-                 <option value="location">Location</option>
-               </select>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className={`px-3 py-2 rounded-lg border ${
+                  theme === 'dark' 
+                    ? 'bg-gray-700 border-gray-600 text-white' 
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
+              >
+                <option value="date">Date</option>
+                <option value="title">Title</option>
+                <option value="location">Location</option>
+              </select>
 
-                             <motion.button
-                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                 className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
-                   theme === 'dark' 
-                     ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
-                     : 'bg-white border-gray-300 hover:bg-gray-50'
-                 }`}
-                 whileHover={{ scale: 1.05 }}
-                 whileTap={{ scale: 0.95 }}
-               >
-                 {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
-                 <span className="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
-                 <span className="sm:hidden">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
-               </motion.button>
+              <motion.button
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
+                  theme === 'dark' 
+                    ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' 
+                    : 'bg-white border-gray-300 hover:bg-gray-50'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
+                <span className="hidden sm:inline">{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
+                <span className="sm:hidden">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
+              </motion.button>
             </div>
 
-                         <motion.button
-               onClick={() => setIsTableLayout(!isTableLayout)}
-               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
-                 theme === 'dark' 
-                   ? 'bg-purple-600 hover:bg-purple-700' 
-                   : 'bg-purple-600 hover:bg-purple-700'
-               } text-white`}
-               whileHover={{ scale: 1.05 }}
-               whileTap={{ scale: 0.95 }}
-             >
+            <motion.button
+              onClick={() => setIsTableLayout(!isTableLayout)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors bg-purple-600 hover:bg-purple-700 text-white`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               {isTableLayout ? (
                 <>
                   <Grid3X3 className="w-4 h-4" />
@@ -269,185 +273,229 @@ const AllRecoveredItems = () => {
         </motion.div>
 
         {/* Content */}
-        <AnimatePresence mode="wait">
-          {filteredItems.length === 0 ? (
-            <motion.div
-              key="no-results"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-12"
-            >
-              <div className="text-6xl mb-4">🎉</div>
-              <h3 className="text-xl font-semibold mb-2">No recovered items found</h3>
-              <p className={`text-gray-500 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                {searchQuery ? 'Try adjusting your search criteria' : 'No items have been recovered yet'}
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className={`max-w-6xl mx-auto p-4 md:p-6 rounded-2xl shadow-xl ${
-                theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
-              }`}
-            >
-              {isTableLayout ? (
-                // Table Layout
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs border-collapse sm:text-sm md:text-base">
-                    <thead>
-                      <tr className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          <span className="hidden sm:inline">Item Title</span>
-                          <span className="sm:hidden">Title</span>
-                        </th>
-                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          <span className="hidden sm:inline">Recovered Location</span>
-                          <span className="sm:hidden">Location</span>
-                        </th>
-                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          <span className="hidden sm:inline">Recovered Date</span>
-                          <span className="sm:hidden">Date</span>
-                        </th>
-                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          <span className="hidden sm:inline">Recovered By</span>
-                          <span className="sm:hidden">By</span>
-                        </th>
-                        <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredItems.map((item, index) => (
-                        <motion.tr
-                          key={item._id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                          className={`border-b ${theme === 'dark' ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-200 hover:bg-gray-50'}`}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-10 h-10 text-purple-600 animate-spin" />
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
+            {filteredItems.length === 0 ? (
+              <motion.div
+                key="no-results"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-12"
+              >
+                <div className="text-6xl mb-4">🎉</div>
+                <h3 className="text-xl font-semibold mb-2">No recovered items found</h3>
+                <p className={`text-gray-500 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {searchQuery ? 'Try adjusting your search criteria' : 'No items have been recovered yet'}
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="content"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className={`max-w-6xl mx-auto p-4 md:p-6 rounded-2xl shadow-xl ${
+                  theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
+                }`}
+              >
+                {isTableLayout ? (
+                  // Table Layout
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs border-collapse sm:text-sm md:text-base">
+                      <thead>
+                        <tr className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                          <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                            Title
+                          </th>
+                          <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                            Location
+                          </th>
+                          <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                            Date
+                          </th>
+                          <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                            By
+                          </th>
+                          <th className={`px-2 py-3 text-left font-semibold sm:px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {currentItems.map((item, index) => (
+                          <motion.tr
+                            key={item._id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                            className={`border-b ${theme === 'dark' ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-200 hover:bg-gray-50'}`}
+                          >
+                            <td className="px-2 py-3 sm:px-4">
+                              <div className="flex items-center gap-2">
+                                <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
+                                <span className={`font-medium truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                                  {item.itemDetails?.title}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-2 py-3 sm:px-4">
+                              <div className="flex items-center gap-2">
+                                <MapPin className="w-4 h-4 text-gray-500 shrink-0" />
+                                <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                                  {item.recoveredLocation}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-2 py-3 sm:px-4">
+                              <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4 text-gray-500 shrink-0" />
+                                <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                                  {new Date(item.recoveredDate).toLocaleDateString()}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-2 py-3 sm:px-4">
+                              <div className="flex items-center gap-2">
+                                <User className="w-4 h-4 text-gray-500 shrink-0" />
+                                <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                                  {item.recoveredBy?.name}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-2 py-3 sm:px-4">
+                              <motion.button
+                                onClick={() => handleShare(item)}
+                                className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                              >
+                                <Share2 className="w-4 h-4" />
+                              </motion.button>
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  // Card Layout
+                  <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {currentItems.map((item, index) => (
+                      <motion.div
+                        key={item._id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.05 }}
+                        className={`p-4 md:p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                          theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-white border border-gray-200'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
+                            <h3 className={`text-base md:text-lg font-semibold truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                              {item.itemDetails?.title}
+                            </h3>
+                          </div>
+                          <motion.button
+                            onClick={() => handleShare(item)}
+                            className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <Share2 className="w-4 h-4" />
+                          </motion.button>
+                        </div>
+
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-gray-500 shrink-0" />
+                            <span className={`text-sm truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                              <span className="font-medium">Location:</span> {item.recoveredLocation}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-gray-500 shrink-0" />
+                            <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                              <span className="font-medium">Date:</span> {new Date(item.recoveredDate).toLocaleDateString()}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <User className="w-4 h-4 text-gray-500 shrink-0" />
+                            <span className={`text-sm truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                              <span className="font-medium">By:</span> {item.recoveredBy?.name}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-gray-500 shrink-0" />
+                            <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                              {getTimeAgo(item.recoveredDate)}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                          <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                            <Award className="w-4 h-4" />
+                            <span className="text-sm font-medium">Successfully Recovered</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-between mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="flex items-center gap-1 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg border transition-colors disabled:opacity-40 disabled:cursor-not-allowed border-gray-300 dark:border-gray-600 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-purple-600 dark:text-purple-300"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        <span className="hidden sm:inline">Prev</span>
+                      </button>
+
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`w-8 h-8 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+                            currentPage === page
+                              ? 'bg-purple-600 text-white shadow-md'
+                              : 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/30'
+                          }`}
                         >
-                          <td className="px-2 py-3 sm:px-4">
-                            <div className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              <span className={`font-medium truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                                {item.itemDetails?.title}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-2 py-3 sm:px-4">
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-gray-500" />
-                              <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                                {item.recoveredLocation}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-2 py-3 sm:px-4">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-gray-500" />
-                              <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                                {new Date(item.recoveredDate).toLocaleDateString()}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-2 py-3 sm:px-4">
-                            <div className="flex items-center gap-2">
-                              <User className="w-4 h-4 text-gray-500" />
-                              <span className={`truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                                {item.recoveredBy?.name}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-2 py-3 sm:px-4">
-                            <motion.button
-                              onClick={() => handleShare(item)}
-                              className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <Share2 className="w-4 h-4" />
-                            </motion.button>
-                          </td>
-                        </motion.tr>
+                          {page}
+                        </button>
                       ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                // Card Layout
-                <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {filteredItems.map((item, index) => (
-                    <motion.div
-                      key={item._id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className={`p-4 md:p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-                        theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-white border border-gray-200'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-5 h-5 text-green-500" />
-                          <h3 className={`text-base md:text-lg font-semibold truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                            {item.itemDetails?.title}
-                          </h3>
-                        </div>
-                        <motion.button
-                          onClick={() => handleShare(item)}
-                          className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Share2 className="w-4 h-4" />
-                        </motion.button>
-                      </div>
 
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-gray-500" />
-                          <span className={`text-sm truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                            <span className="font-medium">Location:</span> {item.recoveredLocation}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4 text-gray-500" />
-                          <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                            <span className="font-medium">Date:</span> {new Date(item.recoveredDate).toLocaleDateString()}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <User className="w-4 h-4 text-gray-500" />
-                          <span className={`text-sm truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                            <span className="font-medium">By:</span> {item.recoveredBy?.name}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-500" />
-                          <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                            {getTimeAgo(item.recoveredDate)}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                        <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
-                          <Award className="w-4 h-4" />
-                          <span className="text-sm font-medium">Successfully Recovered</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        className="flex items-center gap-1 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg border transition-colors disabled:opacity-40 disabled:cursor-not-allowed border-gray-300 dark:border-gray-600 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-purple-600 dark:text-purple-300"
+                      >
+                        <span className="hidden sm:inline">Next</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </div>
     </div>
   );
