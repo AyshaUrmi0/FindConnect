@@ -1,18 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Authcontext from "../context/Authcontext/Authcontext";
-import Loading from "../layouts/Loading";
 
 const MainLayout = () => {
-  const { loading } = useContext(Authcontext);
-
   return (
     <>
       <Navbar />
       <div className="min-h-[calc(100vh-200px)]">
-        {loading ? <Loading /> : <Outlet />}
+        <Outlet />
       </div>
       <Footer />
     </>
